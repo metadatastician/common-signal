@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/metadatastician/common-signal/schemas/v1/signal-record.schema.json",
+  "title": "Common Signal record",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "occupation",
+    "professionalContext",
+    "employment",
+    "impact",
+    "direction",
+    "claim",
+    "evidence",
+    "consultation"
+  ],
+  "properties": {
+    "id": { "type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$" },
+    "occupation": {
+      "enum": ["journalism", "public-relations", "communications", "cross-media"]
+    },
+    "professionalContext": {
+      "enum": ["journalism", "public-relations", "communications", "cross-media"]
+    },
+    "employment": {
+      "enum": ["employee", "freelance", "contracted", "mixed-or-unknown"]
+    },
+    "impact": {
+      "enum": [
+        "workload",
+        "editorial-independence",
+        "worker-control",
+        "collective-bargaining",
+        "surveillance",
+        "attribution",
+        "skills",
+        "plurality"
+      ]
+    },
+    "direction": { "enum": ["improved", "worsened", "mixed", "unknown"] },
+    "claim": { "type": "string", "minLength": 1 },
+    "evidence": { "$ref": "evidence-passport.schema.json" },
+    "consultation": { "$ref": "consultation-record.schema.json" }
+  }
+}
+

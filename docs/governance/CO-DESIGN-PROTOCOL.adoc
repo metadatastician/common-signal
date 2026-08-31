@@ -1,0 +1,219 @@
+// SPDX-License-Identifier: CC-BY-SA-4.0
+// SPDX-FileCopyrightText: 2026 Jonathan D.A. Jewell
+= Common Signal worker and union co-design protocol
+:toc:
+
+== Present status
+
+This protocol is ready to use, but it has not yet been used. No journalist,
+PR or communications worker, workplace representative, NUJ body, or other trade
+union is recorded as having reviewed or approved it. Preparing this document is
+not consultation. Repository status remains `draft-not-consulted` until real
+sessions and reviews are evidenced.
+
+== Purpose
+
+The process exists to give affected workers and their authorised collective
+representatives meaningful power to change, reject, condition, pause, or
+withdraw Common Signal's governance rules. It is not user research intended
+merely to improve adoption. It must happen while outcomes remain changeable.
+
+The initial decision concerns the governance contract, schemas, prohibited-use
+policy, challenge routes, evidence boundaries, and conditions that would have to
+be met before any live connector could be proposed. It does not authorise live
+collection.
+
+== Non-negotiable process safeguards
+
+* Participation is voluntary, informed, accessible, and free from retaliation.
+* Individual participation must not be represented as collective or union
+  authority.
+* A recognised union's own democratic and constitutional processes determine
+  who can speak or decide for it; the project cannot appoint a union mandate.
+* Direct worker participation supplements rather than bypasses collective
+  bargaining or recognised representation.
+* Employers and commissioning organisations do not select worker participants
+  or receive attributable comments without express permission.
+* No union membership list, confidential casework, protected source material,
+  unpublished industrial strategy, special-category data, or identifiable
+  workplace evidence belongs in this repository.
+* Recording is off by default. Any recording requires a separately stated
+  purpose, retention period, access rule, and affirmative agreement.
+* Participants may use a representative, submit privately, decline a question,
+  correct the record, or withdraw attribution.
+* Time, accessibility support, care responsibilities, language needs, and—where
+  resources permit—payment or replacement income must be addressed before a
+  session is described as inclusive.
+* Maintainers must publish changes, reasons, unresolved dissent, and what they
+  declined to change. Silence is not assent.
+
+== Constituencies to invite
+
+Coverage is a diagnostic, not a quota that converts a small sample into a
+mandate. The invitation plan should seek, without collecting unnecessary
+identity data:
+
+* employed and freelance journalists, including workplace or chapel voices;
+* photographers, videographers, production workers, sub-editors, reporters,
+  editors, specialist and local journalists where relevant;
+* PR workers in agency, in-house, freelance, public, private, and third-sector
+  settings;
+* organisational, political, civic, public-sector, and community communications
+  workers;
+* recognised-union and workplace representatives with a recorded mandate;
+* equality, disabled-worker, health-and-safety, freelance, and precarious-worker
+  perspectives;
+* workers affected by outsourcing, platform management, surveillance, workload
+  intensification, redundancy, or loss of professional control.
+
+No single participant should be made to stand in for a whole occupation,
+protected group, workplace, or union.
+
+== Stages and evidence
+
+[cols="1,2,2"]
+|===
+|Stage |Required activity |Record
+
+|Preparation
+|Publish the draft, plain-language summary, invitation scope, safeguards,
+accessibility offer, funding position, and decision boundary.
+|Versioned materials and invitation log without membership lists.
+
+|Listening
+|Separate sessions where power or confidentiality requires them; allow written,
+represented, and anonymous-to-maintainers routes.
+|Session reference, constituencies present, mandate types, themes, omissions,
+and agreed attribution—not raw confidential notes.
+
+|Revision
+|Map every required change and reservation to a response. Publish a redline and
+reasons. Return it to participants for correction.
+|Change matrix and privacy-minimised review records conforming to
+`schemas/v1/governance-review.schema.json`.
+
+|Decision
+|Ask each authorised body to use its own decision process. Keep individual
+support distinct from collective ratification.
+|Scoped ratification records conforming to
+`schemas/v1/governance-ratification.schema.json`.
+
+|Review
+|Re-open the agreement on the recorded date, after a material change, or when a
+safeguard fails. Preserve withdrawal and dispute routes.
+|Review decision, challenges, remedies, and updated authority status.
+|===
+
+== Workshop sequence
+
+A normal session should take 90–120 minutes with breaks and an alternative
+written route. The facilitator must say what can change and must not spend the
+session defending the implementation.
+
+. *Authority and safety:* confirm role, mandate scope, confidentiality,
+  attribution, accessibility, recording status, and withdrawal route.
+. *Work as actually done:* identify checking, correction, coordination,
+  emotional labour, unpaid availability, source handling, approval, and
+  professional liability that an output metric would miss.
+. *Power and collective voice:* examine disclosure, consultation timing,
+  bargaining, refusal, workload, staffing, surveillance, equality effects,
+  outsourcing, and who controls metrics.
+. *Evidence and inference:* test every evidence class for provenance, consent,
+  sampling limits, missing groups, contextual interpretation, and prohibited
+  conclusions.
+. *Adversarial use:* walk through the red-team scenarios below and decide whether
+  the prohibition, detection, challenge, and remedy are adequate.
+. *Change and dissent:* record required changes, conditions, reservations, and
+  explicit non-support. Agree what participants will see before publication.
+. *Next authority step:* distinguish personal feedback, workplace mandate,
+  recognised-union review, and any later ratification process.
+
+== Questions by professional context
+
+=== Journalism
+
+* Could a record expose a source, confidential assignment, union activity, or
+  an individual journalist's performance?
+* Does the model preserve editorial independence, verification time, corrections,
+  legal risk, plurality, moral injury, and the right to refuse unsafe publication?
+* Would proprietorial, managerial, platform, or commissioning power disappear
+  behind a neutral-looking productivity measure?
+
+=== Public relations
+
+* Does the model expose client work, pitches, individual billability, availability,
+  or authorship disputes?
+* Are approval chains, uncompensated revision, reputational liability, workload
+  intensification, and conflicts between client demands and professional judgement
+  visible?
+* Could monitoring audiences or campaigns become monitoring workers?
+
+=== Communications
+
+* Does the model account for accessibility, public accountability, emergency
+  communications, political pressure, and specialist or local knowledge?
+* Could central message control or engagement metrics reduce professional voice?
+* Are public-service duties kept distinct from organisational reputation goals?
+
+=== Cross-media and employment status
+
+* Are freelancers, contractors, outsourced workers and workers with multiple
+  employers able to challenge a record safely?
+* Does responsibility remain visible across publisher, agency, client, platform,
+  vendor and commissioning organisation?
+* Has one sector's metric been imposed on another?
+
+== Mandatory adversarial scenarios
+
+The process must obtain a recorded response to each scenario.
+
+. A manager requests individual output comparisons for a redundancy exercise.
+. A dashboard filter would reveal a small unionised team or likely chapel activity.
+. Industrial-action dates are correlated with production or audience data.
+. An employer calls workforce sentiment analysis “wellbeing research.”
+. A commissioning system scores freelancers by speed, revisions, refusal, or
+  availability.
+. A newsroom uses an automated risk score to approve, rank, rewrite, or suppress
+  editorial work.
+. A PR or communications employer uses client feedback or engagement as an
+  individual performance proxy.
+. A source, worker, or representative challenges an inference after it has been
+  exported or quoted.
+
+For every scenario, ask: can the system refuse it, can representatives detect
+the attempt, what record survives, who can stop processing, what remedy follows,
+and how is recurrence prevented?
+
+== Ratification threshold
+
+Project maintainers cannot ratify worker governance on workers' behalf. A claim
+of ratification requires all of the following:
+
+* at least one authorised collective body identified by a non-sensitive
+  reference and evidence of its mandate;
+* the exact document versions and scope decided upon;
+* a decision made through that body's own valid process;
+* participant review references and a published change matrix;
+* unresolved dissent and conditions preserved rather than averaged away;
+* a review date and withdrawal route;
+* no weakening of prohibited-use rules as a condition of adoption;
+* no implication that one workplace or union decision binds other constituencies.
+
+Ratification is scoped. It does not automatically authorise a connector,
+dataset, deployment, workplace, employer, or research study.
+
+== Live-connector gate
+
+The gate remains closed after governance ratification. A particular connector
+also needs a separately reviewed purpose, lawful basis, data minimisation,
+copyright and source-protection assessment, retention and deletion rules,
+security model, equality assessment, challenge/remedy workflow, and collectively
+appropriate authority. Failure or withdrawal closes the gate.
+
+== Repository records
+
+Only privacy-minimised decision metadata belongs in version control. Confidential
+evidence stays with the body authorised to hold it; the repository stores a
+reference and scope, not the material itself. Current authority is published in
+`.machine_readable/governance/STATUS.json` and checked by
+`scripts/validate-governance.sh`.

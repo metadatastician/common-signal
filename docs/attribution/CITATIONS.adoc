@@ -1,0 +1,37 @@
+// SPDX-License-Identifier: CC-BY-SA-4.0
+// Copyright (c) Jonathan D.A. Jewell <j.d.a.jewell@open.ac.uk>
+= Common Signal - Citation Guide
+:toc:
+
+== BibTeX
+
+[source,bibtex]
+----
+@software{Common Signal_2026,
+  author = {Jewell, Jonathan D.A.},
+  title = {Common Signal},
+  year = {2026},
+  url = {https://github.com/metadatastician/Common Signal},
+  license = {MPL-2.0}
+}
+----
+
+== Harvard Style
+
+Jewell, J. (2026) _Common Signal_ [Computer software]. Available at: https://github.com/metadatastician/Common Signal
+
+== OSCOLA
+
+Jonathan D.A. Jewell, 'Common Signal' (2026) <https://github.com/metadatastician/Common Signal>
+
+== MLA
+
+Jewell, Jonathan D.A. "Common Signal." 2026, github.com/metadatastician/Common Signal.
+
+== APA 7
+
+Jewell, J. (2026). _Common Signal_ [Computer software]. GitHub. https://github.com/metadatastician/Common Signal
+
+== See Also
+
+* link:CITATION.cff[CITATION.cff]

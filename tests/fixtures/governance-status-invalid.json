@@ -1,0 +1,13 @@
+{
+  "schemaVersion": "1.0.0",
+  "status": "draft-not-consulted",
+  "authority": "project-draft-only",
+  "consultationSessions": 1,
+  "recordedReviews": 0,
+  "ratificationRecords": 0,
+  "liveConnectorsGate": "closed",
+  "lastUpdated": "2026-08-30",
+  "notes": [
+    "Positive control: a not-consulted status cannot report a session."
+  ]
+}

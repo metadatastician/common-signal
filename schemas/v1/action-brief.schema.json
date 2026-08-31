@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/metadatastician/common-signal/schemas/v1/action-brief.schema.json",
+  "title": "Common Signal evidence-to-action brief",
+  "x-spdx-license-identifier": "MPL-2.0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "briefReference", "question", "audiences", "evidenceReferences", "evidenceState", "findings", "limitations", "dissent", "possibleActions", "humanDecisionRequired", "reviewDue"],
+  "properties": {
+    "schemaVersion": { "const": "1.0.0" },
+    "briefReference": { "type": "string", "minLength": 1 },
+    "question": { "type": "string", "minLength": 1 },
+    "audiences": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "enum": ["affected-workers", "workplace-representatives", "recognised-union", "journalists", "researchers", "public-interest-organisations"] } },
+    "evidenceReferences": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "type": "string", "minLength": 1 } },
+    "evidenceState": { "enum": ["emerging", "corroborated", "contested", "inconclusive"] },
+    "findings": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 } },
+    "limitations": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 } },
+    "dissent": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+    "possibleActions": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "enum": ["investigate", "verify", "consult", "collectively-negotiate", "report", "challenge", "seek-regulatory-advice", "pause-and-gather-evidence"] } },
+    "humanDecisionRequired": { "const": true },
+    "reviewDue": { "type": "string", "format": "date" }
+  }
+}

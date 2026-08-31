@@ -1,0 +1,59 @@
+// SPDX-License-Identifier: CC-BY-SA-4.0
+// SPDX-FileCopyrightText: 2026 Jonathan D.A. Jewell
+= ADR 0004: Idris2 contract with native Zig API boundaries
+:status: accepted
+:date: 2026-08-30
+
+== Context
+
+The initial implementation routed Zig through Rust exports using a C calling
+convention. The owner clarified that Common Signal's ABI authority must be
+Idris2 and that executable FFI and API surfaces must be Zig-native, with no C
+header, shim, or calling convention.
+
+The project also needs to grow from a contained synthetic prototype into a
+governed observatory capable of source discovery, public-interest
+reconnaissance, voluntary field evidence, filtering, corroboration, and
+actionable intelligence. That expansion must not legitimise worker, union,
+industrial-action, protected-source, or collective-sentiment surveillance.
+
+== Decision
+
+Idris2 modules under `src/interface/Abi/` are the authoritative operation,
+capability, wire-bound, evidence-admission, and prohibited-risk contract. They
+contain no `%foreign "C:..."` declarations and specify no C layout.
+
+Zig implements the executable contract natively, including protocol projection,
+bounded routing, codecs, server I/O, future connectors, and future field-input
+intake. The operational server does not link a Rust static library. A generated
+governance snapshot inside the Zig package must match the canonical status file
+byte for byte at the test gate.
+
+Rust may remain temporarily as a non-ABI reference implementation while parity
+is checked. It exports no foreign symbols and is not on the operational request
+path. A later decision may remove it after the Zig model and evidence pipeline
+cover all retained semantics.
+
+== Evidence admission boundary
+
+Public aggregate evidence may be admitted after provenance and licence checks.
+Organisation-level evidence and voluntary field submissions enter quarantine
+for authority, consent, minimisation, source-protection, and corroboration
+review. Requests involving identifiable-worker monitoring, union activity,
+industrial action, protected-source exposure, or collective-sentiment inference
+are rejected regardless of claimed purpose.
+
+“Reconnaissance” is restricted to source availability, schema drift, coverage
+gaps, public institutional claims, and patterns in lawfully available published
+material. It does not mean covert observation of people or organising.
+
+== Consequences
+
+The earlier Rust/C boundary in ADR 0001 is superseded. Runtime builds must fail
+if they require a C header, C shim, `extern "C"`, Zig `callconv(.c)`, or linkage
+to the former Rust static library. Idris2 typechecking and native Zig tests are
+both required verification gates.
+
+GraphQL and gRPC remain contract-only and must not be described as operational
+transports. Real connectors and field submission remain governed-planned, not
+implemented, until their source-specific gates are ratified and tested.

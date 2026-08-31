@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/metadatastician/common-signal/schemas/v1/consultation-record.schema.json",
+  "title": "Common Signal worker consultation and negotiation record",
+  "description": "A staged, evidenced record. not-recorded must never be interpreted as proof that consultation did not occur.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "stage",
+    "participation",
+    "workerBody",
+    "scope",
+    "evidenceReference",
+    "unresolved"
+  ],
+  "properties": {
+    "stage": {
+      "enum": [
+        "not-recorded",
+        "proposed",
+        "information-shared",
+        "consultation-open",
+        "negotiation",
+        "agreement-reached",
+        "disputed",
+        "review-due"
+      ]
+    },
+    "participation": {
+      "enum": [
+        "not-recorded",
+        "direct",
+        "recognised-union",
+        "elected-worker-body",
+        "mixed"
+      ]
+    },
+    "workerBody": { "type": ["string", "null"] },
+    "scope": { "type": "string", "minLength": 1 },
+    "evidenceReference": { "type": ["string", "null"] },
+    "unresolved": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 },
+      "uniqueItems": true
+    }
+  }
+}
+

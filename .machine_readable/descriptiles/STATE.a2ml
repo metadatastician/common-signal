@@ -1,0 +1,83 @@
+# SPDX-License-Identifier: MPL-2.0
+
+[metadata]
+project = "common-signal"
+version = "0.1.0"
+last-updated = "2026-08-30"
+status = "active"
+
+[project-context]
+name = "Common Signal"
+purpose = "Worker-centred public-interest observatory for AI in journalism, PR, communications, and media work, informed by NUJ and trade-union concerns."
+completion-percentage = 30
+
+[position]
+phase = "implementation"
+maturity = "experimental"
+
+[implemented]
+capabilities = [
+  "synthetic worker-centred Rust domain model",
+  "canonical Rust query filter",
+  "versioned C ABI exported by Rust",
+  "Zig sixteen-slot protocol registry",
+  "REST, GraphQL, and gRPC operation/route projections",
+  "versioned evidence, consultation, signal, challenge, and prohibited-use schemas",
+  "versioned governance session, review, status, and scoped-ratification schemas",
+  "executable default-deny prohibited-use policy",
+  "ready-to-use worker and union co-design protocol with status consistency gate",
+  "distinct journalism, PR, communications, and cross-media context profiles",
+  "accessible server-rendered synthetic HTML baseline",
+  "accessible governance-authority page and canonical read-only status API",
+  "loopback-only Zig REST transport calling Rust through the C ABI",
+  "linked Zig-to-Rust FFI tests",
+  "preserved offline HTML design prototype",
+  "bounded product and architecture review",
+]
+
+[not-implemented]
+capabilities = [
+  "GraphQL or gRPC transports",
+  "production-hardened HTTP server",
+  "persistent storage",
+  "live source connectors",
+  "authentication or authorisation",
+  "real workplace or public-expression collection",
+  "production privacy, retention, challenge, and deletion workflows",
+  "NUJ or union governance agreement",
+  "compatibility with an estate unified-hexadeca-adapter implementation",
+  "thirteen non-REST/GraphQL/gRPC protocol projections",
+]
+
+[route-to-mvp]
+milestones = [
+  { name = "Worker-centred canonical model", completion = 60 },
+  { name = "Evidence passport and inference-boundary schemas", completion = 55 },
+  { name = "Worker and union governance contract", completion = 35 },
+  { name = "First experimental read-only transport", completion = 100 },
+  { name = "Consent-governed source connector", completion = 0 },
+  { name = "Accessible server-rendered observatory", completion = 25 },
+]
+
+[blockers-and-issues]
+items = [
+  "The RSR clade remains UNASSIGNED pending owner choice.",
+  "No local or owner-inventory implementation named unified-hexadeca-adapter was found; compatibility is unproved.",
+  "No NUJ or other union endorsement or governance relationship has been established.",
+]
+
+[critical-next-actions]
+actions = [
+  "Use the prepared co-design protocol with appropriately authorised worker and union participants; record corrections, dissent, scope, and any later ratification without collecting sensitive membership or workplace data.",
+  "Extend semantic JSON Schema fixtures as each governance transition and evidence connector is introduced.",
+  "Harden the Zig HTTP parser, limits, cancellation, and graceful shutdown before any non-local deployment.",
+  "Implement GraphQL and genuine HTTP/2+Protobuf gRPC transports only from the same canonical operation.",
+  "Test the prototype visually and with assistive technology in supported browsers.",
+]
+
+[maintenance-status]
+last-run-utc = "2026-08-30"
+last-report = "none"
+last-result = "pass"
+open-warnings = 3
+open-failures = 0

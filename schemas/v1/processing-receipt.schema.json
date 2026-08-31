@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/metadatastician/common-signal/schemas/v1/processing-receipt.schema.json",
+  "title": "Common Signal evidence processing receipt",
+  "x-spdx-license-identifier": "MPL-2.0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "receiptReference", "sourceReference", "retrievedAt", "sourceVersion", "contentDigest", "licenceDecision", "transformations", "exclusions", "humanReview", "corroboration", "inferenceBoundary"],
+  "properties": {
+    "schemaVersion": { "const": "1.0.0" },
+    "receiptReference": { "type": "string", "minLength": 1 },
+    "sourceReference": { "type": "string", "minLength": 1 },
+    "retrievedAt": { "type": "string", "format": "date-time" },
+    "sourceVersion": { "type": "string", "minLength": 1 },
+    "contentDigest": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
+    "licenceDecision": { "enum": ["permitted", "restricted", "pending", "rejected"] },
+    "transformations": { "type": "array", "uniqueItems": true, "items": { "type": "string", "minLength": 1 } },
+    "exclusions": { "type": "array", "uniqueItems": true, "items": { "type": "string", "minLength": 1 } },
+    "humanReview": { "enum": ["pending", "completed", "disputed"] },
+    "corroboration": { "enum": ["single-source", "independently-corroborated", "contradicted", "not-applicable"] },
+    "inferenceBoundary": { "type": "string", "minLength": 1 }
+  }
+}

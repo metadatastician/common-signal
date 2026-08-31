@@ -1,0 +1,77 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/metadatastician/common-signal/schemas/v1/governance-ratification.schema.json",
+  "title": "Common Signal worker-governance ratification",
+  "description": "A decision record that preserves constituency, mandate, unresolved dissent, scope, expiry, and withdrawal. Project maintainers cannot self-issue collective authority.",
+  "x-spdx-license-identifier": "MPL-2.0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "decisionReference",
+    "status",
+    "scope",
+    "authorisedBodies",
+    "reviewReferences",
+    "unresolvedDissent",
+    "conditions",
+    "decidedAt",
+    "reviewDue",
+    "withdrawalRoute"
+  ],
+  "properties": {
+    "schemaVersion": { "const": "1.0.0" },
+    "decisionReference": { "type": "string", "pattern": "^[a-z0-9][a-z0-9._-]{5,127}$" },
+    "status": { "enum": ["not-ratified", "ratified-with-conditions", "ratified", "withdrawn", "expired"] },
+    "scope": { "type": "string", "minLength": 1 },
+    "authorisedBodies": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["bodyReference", "mandateEvidenceReference", "scope"],
+        "properties": {
+          "bodyReference": { "type": "string", "minLength": 1 },
+          "mandateEvidenceReference": { "type": "string", "minLength": 1 },
+          "scope": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "reviewReferences": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "unresolvedDissent": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "conditions": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "decidedAt": { "type": ["string", "null"], "format": "date-time" },
+    "reviewDue": { "type": ["string", "null"], "format": "date" },
+    "withdrawalRoute": { "type": "string", "minLength": 1 }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "status": { "enum": ["ratified-with-conditions", "ratified"] } } },
+      "then": {
+        "properties": {
+          "authorisedBodies": { "minItems": 1 },
+          "reviewReferences": { "minItems": 1 },
+          "decidedAt": { "type": "string" },
+          "reviewDue": { "type": "string" }
+        }
+      }
+    },
+    {
+      "if": { "properties": { "status": { "const": "ratified-with-conditions" } } },
+      "then": { "properties": { "conditions": { "minItems": 1 } } }
+    }
+  ]
+}

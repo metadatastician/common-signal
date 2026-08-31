@@ -1,0 +1,65 @@
+// SPDX-License-Identifier: CC-BY-SA-4.0
+// SPDX-FileCopyrightText: 2026 Jonathan D.A. Jewell
+= Common Signal governance review form
+
+This is a facilitation template, not evidence that a review occurred. Do not put
+names, membership status, confidential casework, source material, or sensitive
+workplace details into the public repository.
+
+== Before discussion
+
+* Review reference:
+* Participant reference chosen for this process:
+* Professional or representative constituency:
+* Is the participant speaking personally, for a workplace, under a recognised
+  union mandate, or for another collective body?
+* What evidence establishes the mandate, who holds it, and what is its scope?
+* Documents and versions supplied:
+* Accessibility or represented-participation arrangements:
+* Recording status—default `off`:
+* Attribution choice:
+* Correction and withdrawal route:
+
+== Decision boundary
+
+* What may this review change?
+* What is outside this review and why?
+* Is the outcome still genuinely open?
+* Is any employer, funder, vendor, or commissioning-body influence relevant?
+
+== Findings
+
+* What accurately represents work as done?
+* What work, risk, group, power relationship, or collective right is missing?
+* Which terms, categories, filters, or visualisations could cause harm?
+* Which claims or inferences must the system refuse?
+* Are the prohibited-use rules adequate in every mandatory adversarial scenario?
+* Can affected people and representatives inspect, challenge, stop, correct, and
+  obtain remedy?
+* What must change before support is possible?
+* What reservations or dissent must remain visible?
+
+== Disposition
+
+Choose one; this is not automatically a collective decision:
+
+* support;
+* support with required changes;
+* do not support;
+* abstain.
+
+Required changes:
+
+Reservations or reasons for non-support:
+
+Material safe to attribute:
+
+Material that must remain unattributed or outside the repository:
+
+Date by which the participant must receive the proposed record for correction:
+
+== Recorder declaration
+
+The recorder confirms that preparation or attendance has not been represented
+as consent, endorsement, collective agreement, or ratification; and that the
+participant was offered correction and withdrawal routes.

@@ -1,0 +1,140 @@
+// SPDX-License-Identifier: CC-BY-SA-4.0
+// SPDX-FileCopyrightText: 2026 Jonathan D.A. Jewell
+= Common Signal
+:toc:
+:toc-placement: preamble
+
+image:https://img.shields.io/badge/Code-MPL--2.0-blue.svg[Code licence: MPL-2.0,link="LICENSE"]
+image:https://img.shields.io/badge/Docs-CC--BY--SA--4.0-blue.svg[Documentation licence: CC-BY-SA-4.0,link="LICENSES/CC-BY-SA-4.0.txt"]
+image:https://img.shields.io/badge/status-incubating-orange.svg[Status: incubating]
+
+Common Signal is a worker-centred public-interest observatory for examining how
+AI changes journalism, public relations, communications, and the wider media
+industries. Its central questions concern work, voice, power, professional
+judgement, editorial independence, source plurality, and who carries the risk
+when communicative production is automated.
+
+The project is informed by concerns associated with the National Union of
+Journalists (NUJ) and the wider trade-union movement. It is *not* presently an
+NUJ service, an endorsed NUJ project, or a substitute for collective bargaining,
+legal advice, or worker-led research.
+
+[IMPORTANT]
+====
+The included records are synthetic fixtures. Common Signal is not yet a deployed
+evidence service, does not collect live workplace or public-expression data, and
+cannot support claims about real workers, organisations, unions, or populations.
+====
+
+== What it is for
+
+Common Signal is intended to help workers, union representatives, researchers,
+editors, communications leaders, and public-interest organisations move from a
+vague claim such as “AI saved time” to inspectable questions:
+
+* Where did checking, correction, coordination, and emotional labour move?
+* Who gained or lost discretion over tools, pace, ranking, and refusal?
+* Was a deployment disclosed, consulted on, or collectively negotiated?
+* Did automation affect editorial or professional independence?
+* Did production volume rise while source or framing plurality narrowed?
+* Who receives credit, liability, surveillance, and opportunities to learn?
+* What evidence supports the answer, and what inference is prohibited?
+
+It deliberately keeps unlike evidence classes distinct. Sampled public
+expressions, workplace research, search interest, news corpora, incidents, and
+surveys cannot be averaged into a single authoritative “sentiment” or “impact”
+score.
+
+== Current implementation
+
+The first implementation slice contains:
+
+* a Rust canonical domain and query model in `crates/common-signal-core`;
+* explicit occupational, employment, labour-impact, evidence, consent, and
+  collective-governance fields;
+* staged collective consultation and negotiation records rather than a yes/no
+  consultation flag;
+* executable default-deny prohibited-use checks and a versioned machine-readable
+  policy;
+* separate journalism, PR, communications, and cross-media duty/risk profiles;
+* a public governance-authority page and JSON endpoint derived directly from the
+  canonical machine status;
+* a stable C ABI consumed by Zig;
+* a project-local sixteen-slot Zig adapter boundary in
+  `adapters/hexadeca-zig`, with an operational loopback-only REST transport and
+  GraphQL/gRPC projections implemented at the contract level;
+* thirteen additional protocol slots that fail explicitly as unsupported;
+* the original self-contained design prototype and a critical product review in
+  `docs/prototypes/` and `docs/PRODUCT-REVIEW.adoc`.
+
+No persistent store, live connector, authentication system, GraphQL transport,
+gRPC transport, or production deployment has yet been implemented.
+
+== Quick start
+
+[source,bash]
+----
+cargo build --workspace
+cargo test --workspace
+zig test adapters/hexadeca-zig/src/adapter.zig target/debug/libcommon_signal_core.a -lc -ldl -lpthread -lm -lunwind
+just build-adapter
+just run
+----
+
+The Rust build emits the static library consumed by the Zig test. The Zig
+suite checks both pure projection behavior and calls across the real FFI boundary.
+`just run` starts the Zig transport on `127.0.0.1:8080`; the experimental server
+refuses routable interfaces by construction.
+
+With the server running, the current authority boundary is available at
+`http://127.0.0.1:8080/governance` and as canonical JSON at
+`http://127.0.0.1:8080/v1/governance`. It currently reports
+`draft-not-consulted`, zero sessions/reviews/ratifications, and a closed live
+connector gate.
+
+== AI-Assisted Installation
+
+AI assistance is optional. An agent should read `0-AI-MANIFEST.a2ml` first,
+preserve the synthetic-data and worker-governance boundaries, and follow
+`docs/AI_INSTALLATION_GUIDE.adoc`. No installation step requires sending source,
+workplace information, union information, or credentials to an AI service.
+
+== Architecture
+
+[source,text]
+----
+evidence sources (future)
+          |
+          v
+consent + provenance + worker-governance boundary
+          |
+          v
+Rust canonical domain and query algebra
+          |
+          v  stable C ABI
+Zig sixteen-slot adapter registry and wire I/O
+          |
+          +-- REST       loopback transport implemented
+          +-- GraphQL    projection only; no transport
+          +-- gRPC       projection only; no transport
+          `-- 13 slots   explicit UnsupportedProtocol
+----
+
+The Rust core owns meaning and invariants. Zig owns low-overhead protocol and
+FFI boundaries. If Elixir is added later for ingestion or durable orchestration,
+native integration should use supervised SNIFs rather than ordinary NIFs so a
+native failure does not crash the BEAM.
+
+Worker-governance and prohibited-use details are in
+`docs/WORKER-GOVERNANCE.adoc`. The ready-to-use—but not yet conducted—worker and
+union review process is in `docs/governance/CO-DESIGN-PROTOCOL.adoc`. Versioned
+schemas are under `schemas/v1/`, and
+the policy synchronised with the executable Rust rules is
+`policies/prohibited-uses.json`.
+
+== Licensing
+
+Code, configuration, schemas, and scripts are licensed under MPL-2.0. Prose
+documentation and the design prototype are licensed under CC-BY-SA-4.0. The
+authoritative texts are in `LICENSE` and `LICENSES/` and per-file SPDX headers
+state the applicable licence.

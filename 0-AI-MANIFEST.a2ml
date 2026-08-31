@@ -1,0 +1,38 @@
+# SPDX-License-Identifier: MPL-2.0
+# Copyright (c) 2026 Jonathan D.A. Jewell (hyperpolymath) <j.d.a.jewell@open.ac.uk>
+#
+# AI-MANIFEST.a2ml — AI agent work allocation and policy
+#
+[metadata]
+version = "0.1.0"
+last-updated = "2026-08-30"
+
+[project]
+name = "Common Signal"
+purpose = "A worker-centred public-interest observatory for AI in journalism, public relations, communications, and the media industries, grounded in NUJ and trade-union concerns."
+
+[ai-allocation]
+agents = [
+  { name = "CLAUDE", role = "proofs, compilers, repo-local implementation, CI/CD, formal verification, Rust/Idris2/Zig" },
+  { name = "CHATGPT", role = "prose, papers, publication review, standards docs, outreach drafts, letters" },
+  { name = "GEMINI", role = "estate audits, cross-repo sweeps, long-context triage, pattern detection" },
+  { name = "VIBE", role = "UI/frontend, PanLL panels, ReScript components, theming, rapid prototyping" },
+]
+
+[policy]
+rules = [
+  "Do not duplicate tasks across sections. If a task needs multiple LLMs, note the handoff.",
+  "Update THIS file during sessions. Do NOT recreate per-repo TODO files.",
+  "Treat journalism, PR, communications, media work, NUJ concerns, and the wider trade-union movement as the product's central context.",
+  "Do not imply NUJ or union endorsement, authority, partnership, or representation without evidence.",
+  "Do not introduce employee scoring, union surveillance, strike monitoring, individual performance management, or workforce sentiment inference.",
+  "Keep synthetic fixtures visibly synthetic and keep unlike evidence classes distinct.",
+]
+
+[work-allocation]
+items = [
+  { agent = "CLAUDE", task = "proofs, compilers, repo-local implementation, CI/CD, formal verification, Rust/Idris2/Zig" },
+  { agent = "CHATGPT", task = "prose, papers, publication review, standards docs, outreach drafts, letters" },
+  { agent = "GEMINI", task = "estate audits, cross-repo sweeps, long-context triage, pattern detection" },
+  { agent = "VIBE", task = "UI/frontend, PanLL panels, ReScript components, theming, rapid prototyping" },
+]

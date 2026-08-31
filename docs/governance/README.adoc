@@ -1,0 +1,17 @@
+// SPDX-License-Identifier: CC-BY-SA-4.0
+// Copyright (c) Jonathan D.A. Jewell <j.d.a.jewell@open.ac.uk>
+= Governance Pillar (TSDM)
+
+Project-specific worker governance is defined in:
+
+* `../WORKER-GOVERNANCE.adoc` — current substantive safeguards;
+* `CO-DESIGN-PROTOCOL.adoc` — consultation and scoped-ratification process;
+* `INVITATION-TEMPLATE.adoc` — honest invitation, accessibility, funding, and
+  authority disclosure;
+* `REVIEW-FORM.adoc` — privacy-minimised facilitated review template;
+* `CHANGE-MATRIX-TEMPLATE.adoc` — traceability for changes, reasons, correction,
+  omissions, and unresolved dissent.
+
+These documents do not claim that consultation or ratification has occurred.
+The machine-readable authority state is
+`../../.machine_readable/governance/STATUS.json`.

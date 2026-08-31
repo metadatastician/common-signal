@@ -1,0 +1,45 @@
+// SPDX-License-Identifier: CC-BY-SA-4.0
+// SPDX-FileCopyrightText: 2026 Jonathan D.A. Jewell
+= Worker-governance change and dissent matrix
+
+This template maps reviewed input to action. It must use privacy-minimised
+references, not names or union membership information. Similar comments may be
+linked, but dissent must not be erased by aggregation.
+
+[cols="1,1,2,2,2,1,2"]
+|===
+|Item |Review reference |Required change, reservation, or dissent |Project response |Resulting document and revision |State |Participant correction
+
+|GOV-001
+|_[non-identifying reference]_
+|_[faithful account]_
+|_[accepted, partly accepted, declined, or pending—with reasons]_
+|_[file, section, revision, or no change]_
+|_[open / implemented / disputed / withdrawn]_
+|_[confirmed, corrected, pending, or attribution withdrawn]_
+|===
+
+== Coverage and omissions
+
+* Constituencies invited:
+* Constituencies represented in recorded reviews:
+* Mandate types represented:
+* Perspectives known to be absent:
+* Accessibility and participation barriers encountered:
+* Employer, funder, vendor, or commissioning influence declared:
+* Comments received through a confidential holder but not available to the
+  project—record only their existence and authorised conclusion:
+
+== Decision summary
+
+* Changes implemented:
+* Changes still open:
+* Changes declined and reasons:
+* Unresolved dissent:
+* Prohibited-use rules weakened: `no`—if this cannot remain `no`, ratification
+  must not proceed.
+* Exact documents returned for correction:
+* Correction deadline:
+* Next authorised decision route:
+
+Publication of this matrix is not a claim of support or ratification.

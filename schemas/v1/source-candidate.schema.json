@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/metadatastician/common-signal/schemas/v1/source-candidate.schema.json",
+  "title": "Common Signal source candidate registry",
+  "x-spdx-license-identifier": "MPL-2.0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "lastReviewed", "sources"],
+  "properties": {
+    "schemaVersion": { "const": "1.0.0" },
+    "lastReviewed": { "type": "string", "format": "date" },
+    "sources": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "name", "authority", "url", "sourceClass", "access", "status", "connectorGate", "uses", "risks", "licenceReview"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]{2,63}$" },
+          "name": { "type": "string", "minLength": 1 },
+          "authority": { "type": "string", "minLength": 1 },
+          "url": { "type": "string", "format": "uri" },
+          "sourceClass": { "enum": ["union-publication", "official-statistics", "regulatory-guidance", "official-public-record", "media-research", "published-media-index", "voluntary-field-evidence"] },
+          "access": { "enum": ["manual-review", "open-api", "authenticated-api", "licensed-api", "voluntary-submission"] },
+          "status": { "enum": ["manual-baseline", "candidate", "quarantine", "blocked"] },
+          "connectorGate": { "enum": ["closed", "source-review-required", "licence-required", "governance-required"] },
+          "uses": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "type": "string", "minLength": 1 } },
+          "risks": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "type": "string", "minLength": 1 } },
+          "licenceReview": { "type": "string", "minLength": 1 }
+        }
+      }
+    }
+  }
+}

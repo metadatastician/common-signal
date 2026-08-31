@@ -1,0 +1,52 @@
+// SPDX-License-Identifier: CC-BY-SA-4.0
+// SPDX-FileCopyrightText: 2026 Jonathan D.A. Jewell
+= AI-assisted installation guide
+
+AI assistance is optional and confers no extra authority. Before acting, an
+agent must read `../0-AI-MANIFEST.a2ml`, this guide, and the repository's current
+status. It must distinguish configured, built, tested, linked, deployed, and
+proved capabilities.
+
+[[ai-implementation]]
+== AI implementation boundary
+
+AI is a possible subject of observation and an optional development aid; it is
+not required at runtime by the implemented core. No model provider, prompt
+pipeline, classifier, or inference API is currently wired into Common Signal.
+
+== Safe local sequence
+
+[source,bash]
+----
+cargo build --workspace
+cargo test --workspace
+zig test adapters/hexadeca-zig/src/adapter.zig \
+  target/debug/libcommon_signal_core.a \
+  -lc -ldl -lpthread -lm -lunwind
+----
+
+The commands build and test local synthetic fixtures. They do not require API
+keys, external data, or a network connection.
+
+== Prohibited assumptions
+
+An agent must not claim that Common Signal is endorsed by or operated for the
+NUJ, any union, or any worker body without evidence of that relationship. It
+must not introduce live workplace collection, employee scoring, union
+surveillance, performance management, sentiment inference about a workforce,
+or disciplinary uses as an installation convenience.
+
+An agent must not mark a protocol as supported merely because a registry slot,
+route string, schema stub, or example exists. Support requires a working
+projection, stable errors, cross-boundary tests, and the transport itself.
+
+== Data and credentials
+
+=== Privacy notice
+
+Do not provide real workplace, membership, source, journalistic, bargaining,
+personal, or special-category data to an AI system during installation. The
+current build makes no network request and needs no personal data. Do not ask
+for credentials unless a later, separately authorised integration genuinely
+requires them and its privacy, security, and worker-governance review is
+complete.

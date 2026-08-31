@@ -1,0 +1,18 @@
+{
+  "schemaVersion": "1.0.0",
+  "reviewReference": "synthetic-review-001",
+  "participantReference": "synthetic-participant-001",
+  "constituencies": ["communications-worker"],
+  "mandate": {
+    "kind": "self",
+    "evidenceReference": null,
+    "scope": "synthetic schema exercise only"
+  },
+  "documentsReviewed": ["synthetic-governance-draft-001"],
+  "disposition": "support-with-changes",
+  "requiredChanges": ["Retain a visible statement that this fixture records no real opinion."],
+  "reservations": ["No authority or endorsement is represented."],
+  "safeToAttribute": false,
+  "withdrawalRoute": "synthetic route; no real participant exists",
+  "recordedAt": "2026-08-30T11:00:00Z"
+}

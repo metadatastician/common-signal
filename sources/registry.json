@@ -1,0 +1,56 @@
+{
+  "schemaVersion": "1.0.0",
+  "lastReviewed": "2026-08-30",
+  "sources": [
+    {
+      "id": "nuj-ai-resources", "name": "NUJ artificial-intelligence policy and resource library", "authority": "National Union of Journalists", "url": "https://www.nuj.org.uk/resource/artificial-intelligence.html", "sourceClass": "union-publication", "access": "manual-review", "status": "manual-baseline", "connectorGate": "source-review-required",
+      "uses": ["union policy baseline", "journalism and creative-worker concerns", "consultation and collective-control requirements"],
+      "risks": ["must not infer all member views", "motions and guidance require date and constitutional context"], "licenceReview": "Quote and reuse limits must be checked item by item; store citations and short extracts, not a shadow archive."
+    },
+    {
+      "id": "tuc-ai-work", "name": "TUC AI, worker voice, and workplace-surveillance research", "authority": "Trades Union Congress", "url": "https://www.tuc.org.uk/research-analysis/reports/dignity-work-and-ai-revolution", "sourceClass": "union-publication", "access": "manual-review", "status": "manual-baseline", "connectorGate": "source-review-required",
+      "uses": ["worker-governance baseline", "algorithmic-management and surveillance risk", "collective bargaining policy"],
+      "risks": ["policy evidence is not a prevalence estimate", "survey populations and dates must travel with claims"], "licenceReview": "Retain source URL, publication date, methodology, and reuse terms."
+    },
+    {
+      "id": "ons-beta-api", "name": "Office for National Statistics API", "authority": "Office for National Statistics", "url": "https://developer.ons.gov.uk/", "sourceClass": "official-statistics", "access": "open-api", "status": "candidate", "connectorGate": "source-review-required",
+      "uses": ["labour-market denominators", "industry and occupation context", "business technology-adoption context"],
+      "risks": ["beta API may change", "classification mismatch with media occupations", "official statistics do not establish workplace causation"], "licenceReview": "Confirm each dataset's current licence, version, dimensions, revisions, and disclosure controls before ingestion."
+    },
+    {
+      "id": "ofcom-media-research", "name": "Ofcom news consumption and Media Nations research", "authority": "Ofcom", "url": "https://www.ofcom.org.uk/research-and-data", "sourceClass": "media-research", "access": "manual-review", "status": "candidate", "connectorGate": "source-review-required",
+      "uses": ["news-consumption context", "platform and media-market context", "plurality questions"],
+      "risks": ["survey and measurement changes across waves", "audience use is not worker impact", "headline percentages require base and method"], "licenceReview": "Inventory downloadable tables and reports; preserve wave, base, weighting, question wording, and reuse terms."
+    },
+    {
+      "id": "ico-worker-monitoring", "name": "ICO data protection and monitoring workers guidance", "authority": "Information Commissioner's Office", "url": "https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/employment/monitoring-workers/data-protection-and-monitoring-workers/", "sourceClass": "regulatory-guidance", "access": "manual-review", "status": "manual-baseline", "connectorGate": "source-review-required",
+      "uses": ["privacy and monitoring safeguards", "rights and objection routes", "regulatory change watch"],
+      "risks": ["guidance is under review", "not legal advice", "jurisdiction and effective date must be explicit"], "licenceReview": "Monitor revisions and cite the exact version consulted."
+    },
+    {
+      "id": "companies-house", "name": "Companies House public API", "authority": "Companies House", "url": "https://developer.company-information.service.gov.uk/", "sourceClass": "official-public-record", "access": "authenticated-api", "status": "candidate", "connectorGate": "source-review-required",
+      "uses": ["media-organisation identity resolution", "ownership and filing context", "company-status corroboration"],
+      "risks": ["API key must remain secret", "public filings can contain personal information", "company records do not establish editorial control"], "licenceReview": "Limit first connector to organisation-level fields after authentication, rate-limit, privacy, and reuse review."
+    },
+    {
+      "id": "find-case-law", "name": "Find Case Law", "authority": "The National Archives", "url": "https://caselaw.nationalarchives.gov.uk/legal-framework", "sourceClass": "official-public-record", "access": "licensed-api", "status": "blocked", "connectorGate": "licence-required",
+      "uses": ["potential future legal and remedy context"],
+      "risks": ["computational analysis requires a separate licence", "external indexing is restricted", "judgments contain sensitive personal information"], "licenceReview": "No collection or computational analysis until written licence scope, privacy assessment, minimisation, and legal review are recorded."
+    },
+    {
+      "id": "media-cloud", "name": "Media Cloud", "authority": "Media Cloud project", "url": "https://www.mediacloud.org/documentation", "sourceClass": "published-media-index", "access": "open-api", "status": "quarantine", "connectorGate": "source-review-required",
+      "uses": ["published-news source discovery", "coverage comparison", "candidate corroboration"],
+      "risks": ["archive coverage is not the media population", "copyright and source terms persist", "query design can encode framing bias"], "licenceReview": "Review API, archive, publisher, quotation, retention, and redistribution terms before a connector."
+    },
+    {
+      "id": "gdelt-doc", "name": "GDELT DOC and Context APIs", "authority": "GDELT Project", "url": "https://blog.gdeltproject.org/gdelt-doc-2-0-api-debuts/", "sourceClass": "published-media-index", "access": "open-api", "status": "quarantine", "connectorGate": "source-review-required",
+      "uses": ["multilingual published-news discovery", "time-bounded coverage reconnaissance", "candidate source finding"],
+      "risks": ["coverage denominator and translation uncertainty", "automated tone is not public or worker sentiment", "article rights remain with publishers"], "licenceReview": "Use for discovery only until current API terms, source coverage, caching, quotation, and reproducibility are reviewed."
+    },
+    {
+      "id": "field-observations", "name": "Voluntary worker and representative field observations", "authority": "Submitting worker or authorised collective body", "url": "https://github.com/metadatastician/common-signal/blob/main/docs/governance/CO-DESIGN-PROTOCOL.adoc", "sourceClass": "voluntary-field-evidence", "access": "voluntary-submission", "status": "blocked", "connectorGate": "governance-required",
+      "uses": ["work-as-done evidence", "worker-defined harms and benefits", "correction of public-source blind spots"],
+      "risks": ["retaliation", "source exposure", "special-category data", "unrepresentative testimony", "employer discovery"], "licenceReview": "No intake until secure non-Git storage, consent, withdrawal, representation, safeguarding, retention, deletion, and challenge workflows are ratified and tested."
+    }
+  ]
+}

@@ -1,0 +1,109 @@
+// SPDX-License-Identifier: CC-BY-SA-4.0
+// SPDX-FileCopyrightText: 2026 Jonathan D.A. Jewell
+= Worker governance and collective remedy
+:toc:
+
+== Status and authority
+
+This is an executable project contract, not a collective agreement and not a
+claim of NUJ or trade-union endorsement. It establishes defaults for the
+experimental implementation until appropriately authorised worker and union
+participants replace or ratify them through a real governance process.
+
+The process, mandate boundaries, review form, adversarial scenarios, and
+ratification threshold are specified in
+`docs/governance/CO-DESIGN-PROTOCOL.adoc`. Current machine-readable status is
+`draft-not-consulted`; creation of consultation materials does not change it.
+The loopback service exposes that same embedded record at `/v1/governance` and
+an accessible explanation at `/governance`; these are transparency surfaces,
+not participation or voting mechanisms.
+
+== Governing principle
+
+People affected by collection, classification, comparison, or publication must
+have meaningful power over purpose, scope, safeguards, interpretation,
+retention, challenge, and remedy. Individual consent cannot be used to bypass a
+recognised collective process or to legitimise structural workplace monitoring.
+
+== Consultation is a process, not a boolean
+
+Common Signal records a staged process:
+
+. proposed change;
+. information shared with affected workers or representatives;
+. consultation open while outcomes remain changeable;
+. collective negotiation;
+. agreement reached;
+. disputed process or outcome;
+. review due.
+
+`not-recorded` means only that the available evidence does not establish the
+stage. It must not be rendered or analysed as “consultation did not occur.”
+
+Participation routes distinguish direct consultation, recognised-union
+representation, elected worker bodies, mixed arrangements, and absence from the
+record. A consultation record carries its scope, evidence reference, worker
+body where appropriate, and unresolved matters.
+
+== Purpose limitation
+
+The current implementation recognises four possible high-level purposes:
+
+* public-interest research;
+* worker-led research;
+* evidence for consultation or collective bargaining;
+* public-accountability reporting.
+
+A declared permitted purpose does not override a prohibited processing
+characteristic. `policies/prohibited-uses.json` is default-deny and has no
+override mechanism.
+
+== Prohibited uses
+
+The executable Rust policy rejects:
+
+* identifiable-worker performance scoring;
+* disciplinary, dismissal, redundancy-selection, or adverse-employment use;
+* union membership, representation, organising, or activity surveillance;
+* monitoring industrial action or preparation for it;
+* inference about workforce, union, or membership sentiment or legitimacy;
+* unreviewed automated editorial or professional decisions.
+
+These prohibitions apply regardless of whether the requester describes a wider
+project as research, efficiency, safety, innovation, or public interest.
+
+== Context-specific duties
+
+Journalism, PR, and communications are related but non-interchangeable
+professional contexts. The canonical profiles preserve distinct duties and
+risks, including editorial independence and source protection in journalism;
+authorship, client pressure, and availability intensification in PR; and
+accessibility, public accountability, and centralised message control in
+communications.
+
+Cross-media records must retain those component duties rather than imposing one
+sector's performance measures on another.
+
+== Challenge and remedy
+
+The versioned challenge schema supports submitted, under-review, corrected,
+upheld, rejected-with-reasons, and unresolved states. It records whether the
+challenger has collective representation and the remedy or next step.
+
+A production process will also need, before live data collection:
+
+* independent escalation and appeal;
+* collectively agreed response times;
+* correction and deletion propagation;
+* safe routes for confidential and represented challenges;
+* non-retaliation commitments;
+* audit access for authorised worker representatives;
+* enforceable consequences for prohibited reuse.
+
+== Current privacy and retention boundary
+
+The current service uses authored synthetic fixtures only. It stores no requests,
+identifiers, analytics, or challenge records. The HTTP responses send
+`Cache-Control: no-store`. Live connectors remain prohibited until lawful basis,
+data minimisation, copyright, retention, deletion, security, and collective
+governance are specified and tested.

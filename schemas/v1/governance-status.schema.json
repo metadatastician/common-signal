@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/metadatastician/common-signal/schemas/v1/governance-status.schema.json",
+  "title": "Common Signal governance authority status",
+  "description": "Public capability-honesty record. Counts are evidence references, not participant or membership counts.",
+  "x-spdx-license-identifier": "MPL-2.0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "status",
+    "authority",
+    "consultationSessions",
+    "recordedReviews",
+    "ratificationRecords",
+    "liveConnectorsGate",
+    "lastUpdated",
+    "notes"
+  ],
+  "properties": {
+    "schemaVersion": { "const": "1.0.0" },
+    "status": { "enum": ["draft-not-consulted", "consultation-open", "revision-open", "decision-pending", "ratified-with-conditions", "ratified", "disputed", "withdrawn", "expired"] },
+    "authority": { "enum": ["project-draft-only", "participant-review-only", "authorised-worker-and-collective-process"] },
+    "consultationSessions": { "type": "integer", "minimum": 0 },
+    "recordedReviews": { "type": "integer", "minimum": 0 },
+    "ratificationRecords": { "type": "integer", "minimum": 0 },
+    "liveConnectorsGate": { "const": "closed" },
+    "lastUpdated": { "type": "string", "format": "date" },
+    "notes": { "type": "array", "items": { "type": "string", "minLength": 1 } }
+  }
+}

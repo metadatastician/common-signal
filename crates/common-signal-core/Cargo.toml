@@ -1,0 +1,13 @@
+# SPDX-License-Identifier: MPL-2.0
+
+[package]
+name = "common-signal-core"
+description = "Worker-centred evidence and query model for Common Signal"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+rust-version.workspace = true
+
+[lints]
+workspace = true

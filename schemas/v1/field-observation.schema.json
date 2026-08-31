@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/metadatastician/common-signal/schemas/v1/field-observation.schema.json",
+  "title": "Common Signal privacy-minimised field observation",
+  "description": "A quarantined metadata record, not raw testimony or a public submission form.",
+  "x-spdx-license-identifier": "MPL-2.0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "reference", "authority", "professionalContext", "stage", "consentScope", "withdrawalRoute", "externallyHeldEvidenceReference", "riskReview", "inferenceBoundary"],
+  "properties": {
+    "schemaVersion": { "const": "1.0.0" },
+    "reference": { "type": "string", "pattern": "^[a-z0-9][a-z0-9._-]{5,127}$" },
+    "authority": { "enum": ["personal-experience", "workplace-mandate", "recognised-union-mandate", "other-collective-mandate"] },
+    "professionalContext": { "enum": ["journalism", "public-relations", "communications", "cross-media"] },
+    "stage": { "enum": ["received", "consent-and-authority-review", "quarantined", "corroboration", "admitted", "challenged", "withdrawn", "rejected"] },
+    "consentScope": { "type": "string", "minLength": 1 },
+    "withdrawalRoute": { "type": "string", "minLength": 1 },
+    "externallyHeldEvidenceReference": { "type": ["string", "null"] },
+    "riskReview": { "enum": ["pending", "aggregate-public", "organisation-level", "voluntary-field", "prohibited-surveillance", "protected-source-risk"] },
+    "inferenceBoundary": { "type": "string", "minLength": 1 }
+  }
+}

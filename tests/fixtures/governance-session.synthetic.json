@@ -1,0 +1,16 @@
+{
+  "schemaVersion": "1.0.0",
+  "sessionReference": "synthetic-session-001",
+  "heldAt": "2026-08-30T10:00:00Z",
+  "format": "asynchronous-written",
+  "constituenciesPresent": ["journalism-worker"],
+  "mandateKindsPresent": ["self"],
+  "documentsReviewed": ["synthetic-governance-draft-001"],
+  "recordingStatus": "off",
+  "themes": ["synthetic test fixture only"],
+  "requiredChanges": [],
+  "dissent": [],
+  "knownOmissions": ["This is not a real session or participant record."],
+  "correctionDeadline": "2026-09-30",
+  "withdrawalRoute": "synthetic route; no real participant exists"
+}

@@ -1,0 +1,20 @@
+# SPDX-License-Identifier: MPL-2.0
+
+[workspace]
+members = ["crates/common-signal-core"]
+resolver = "2"
+
+[workspace.package]
+version = "0.1.0"
+edition = "2024"
+license = "MPL-2.0"
+repository = "https://github.com/metadatastician/common-signal"
+rust-version = "1.85"
+
+[workspace.lints.rust]
+unsafe_code = "deny"
+missing_docs = "warn"
+
+[workspace.lints.clippy]
+all = "warn"
+pedantic = "warn"

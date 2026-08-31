@@ -1,0 +1,151 @@
+// SPDX-License-Identifier: CC-BY-SA-4.0
+// SPDX-FileCopyrightText: 2026 Jonathan D.A. Jewell
+= Product review of the Common Signal preview
+:toc:
+
+== Observation horizon
+
+This review covers the single local file supplied as
+`/mnt/c/Users/USER/Downloads/preview.html`: 108,187 bytes and 1,551 lines,
+inspected as source and as text rendered by `w3m`. A graphical browser automation
+helper was unavailable, so this review does not claim pixel-level visual QA or
+successful interaction in Chromium, Firefox, or assistive technology.
+
+== What the preview is
+
+The preview is an unusually complete executable product proposition for an
+“AI and communicative life observatory.” It is a self-contained, offline HTML
+application with synthetic fixtures, deterministic local filtering, display and
+privacy settings, keyboard support, evidence-passport views, a work-system
+view, a protocol registry, exports, and self-diagnostics.
+
+It is not a live observatory. Its own copy is appropriately candid: it makes no
+claim about real people or current events, denies network access in its Content
+Security Policy, calls the data synthetic, and describes itself as an
+architecture sketch rather than completed proof.
+
+== What it is trying to do
+
+The core intellectual move is to replace shallow “AI productivity” and
+“sentiment” dashboards with a mechanism-and-evidence model. It asks who gains
+capacity, who inherits verification and coordination burdens, how attention and
+voice are redistributed, and where an inference must stop.
+
+Six sections express that proposition:
+
+* *Briefing* gives an editorially legible weekly account rather than a scorecard.
+* *Pulse field* explores sampled public expressions while warning that
+  expressions are not people and samples are not populations.
+* *Explore* starts with a public question rather than a wall of measures.
+* *Work & power* follows task displacement, judgement, responsibility, and
+  control through a production workflow.
+* *Methods* attaches provenance, uncertainty, limitations, and challenge status
+  to claims.
+* *System* makes schemas, transformations, adapters, diagnostics, and future
+  proof obligations inspectable.
+
+== What is strongest
+
+=== Epistemic honesty
+
+The page repeatedly distinguishes observation, classification, and inference.
+It refuses to equate sampled expression with population feeling and it prevents
+source classes from collapsing into a single index. This should remain a product
+invariant, not merely explanatory copy.
+
+=== Work is treated as a system
+
+The preview sees that a faster first draft can create more checking, escalation,
+correction, coordination, monitoring, and responsibility elsewhere. This is the
+right basis for a union-centred product because it measures redistribution of
+work and power, not only task duration.
+
+=== Claims carry evidence passports
+
+Scope, collection method, unit, sample, confidence, verification date,
+limitations, and challenge status travel with each claim. That model can support
+union scrutiny, corrections, and bargaining evidence far better than detached
+dashboard annotations.
+
+=== Privacy and accessibility are designed in
+
+The prototype is offline, denies network connections, makes local learning
+opt-in, does not store searches, has a skip link and named controls, supports
+keyboard navigation, provides text alternatives to visual summaries, and
+respects motion preferences. Those features fit the public-interest premise.
+
+== What needs to change for the clarified mission
+
+=== Labour and collective power must become explicit
+
+The preview discusses workers and control but mostly at an individual workflow
+level. Common Signal needs first-class representation for employment status,
+freelance conditions, collective consultation, recognition and bargaining,
+worker-elected governance, grievance and remedy, redundancy or role change,
+pay, hours, surveillance, discrimination, health and safety, and the right to
+refuse unsafe or unethical automation.
+
+=== Journalism, PR, and communications require distinct contexts
+
+These occupations overlap but do not share identical duties, power relations,
+codes, legal risks, or measures of public value. The domain model must preserve
+their differences while still supporting cross-media analysis. PR and comms
+workers should not appear only as sources of influence on journalism; they are
+workers with their own professional judgement, workloads, monitoring, and
+collective interests.
+
+=== Union participation must govern, not decorate
+
+A “union lens” applied after collection would be insufficient. Worker and union
+representatives should help decide what may be collected, for what purpose, how
+small groups are protected, which comparisons are harmful, how long records are
+retained, and what remedy follows a challenge. Workplace data must not be
+repurposed for individual performance management, discipline, union
+surveillance, or strike monitoring.
+
+=== The Pulse field is the riskiest surface
+
+The visual metaphor is compelling but may give emotion classifications more
+authority than the warnings can undo. Any production version needs strong
+provenance, multilingual and dialect audits, contestable labels, deletion and
+appeal paths, small-group suppression, and a clear reason for including emotion
+classification at all. It should never be used to infer the mood or legitimacy
+of a workforce, union, membership, audience, or public.
+
+=== A synthetic demo needs a migration boundary
+
+The prototype currently combines authored fixtures, UI state, schemas, and
+diagnostics in one HTML file. Production work should preserve it as a design
+reference while moving meaning into versioned schemas and a canonical query
+algebra. Live connectors must remain disabled until consent, lawful basis,
+copyright, retention, worker-governance, and security obligations are specified
+and tested.
+
+== Recommended product definition
+
+Common Signal should be a worker-governed evidence infrastructure and public
+observatory for examining AI-mediated change in journalism, PR, communications,
+and media work. It should support three related but non-interchangeable uses:
+
+. *Public-interest understanding*: careful briefings on voice, plurality,
+  information quality, and communicative power.
+. *Workplace and bargaining understanding*: inspectable evidence about workload,
+  control, independence, skills, surveillance, attribution, and distribution of
+  benefit and risk.
+. *Accountability and challenge*: provenance, limitations, corrections, worker
+  consultation records, and routes to contest claims or data use.
+
+It should not become an employee-scoring product, a newsroom productivity
+leaderboard, a union or public sentiment detector, an automated editorial
+decision-maker, or a mechanism for replacing consultation and bargaining.
+
+== Assessment
+
+The preview is conceptually strong, unusually honest, and worth developing. Its
+best idea is not the animated field or any single dashboard; it is that every
+claim about AI and communication must expose the work system, power shift,
+evidence route, and inference boundary behind it. The clarified NUJ and union
+movement focus makes that idea sharper. The next challenge is institutional:
+worker governance and collective remedy must be embedded as deeply as the
+technical provenance model.
+

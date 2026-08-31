@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "policyVersion": "1.0.0",
+  "effectiveDate": "2026-08-30",
+  "default": "deny",
+  "permittedPurposes": [
+    "public-interest-research",
+    "worker-led-research",
+    "collective-bargaining-evidence",
+    "public-accountability"
+  ],
+  "prohibitedUses": [
+    {
+      "code": "individual-performance-scoring",
+      "description": "Ranking, scoring, or evaluating an identifiable worker's performance."
+    },
+    {
+      "code": "discipline-or-dismissal",
+      "description": "Supporting discipline, dismissal, redundancy selection, or adverse employment action."
+    },
+    {
+      "code": "union-surveillance",
+      "description": "Identifying or monitoring union membership, representation, organising, or activity."
+    },
+    {
+      "code": "strike-monitoring",
+      "description": "Monitoring industrial action or preparations for industrial action."
+    },
+    {
+      "code": "workforce-sentiment-inference",
+      "description": "Inferring the sentiment, mood, cohesion, or legitimacy of a workforce, union, or membership."
+    },
+    {
+      "code": "automated-editorial-decision",
+      "description": "Making an unreviewed editorial or professional decision with material consequences."
+    }
+  ],
+  "enforcement": {
+    "implementation": "common_signal_core::governance::validate_use",
+    "onViolation": "reject",
+    "override": "none",
+    "auditRequirement": "record policy version and rejection code without retaining sensitive request content"
+  }
+}
+

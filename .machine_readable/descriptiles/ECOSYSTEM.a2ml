@@ -1,0 +1,29 @@
+# SPDX-License-Identifier: MPL-2.0
+
+[metadata]
+project = "common-signal"
+ecosystem = "metadatastician"
+
+[position]
+type = "public-interest-observatory"
+purpose = "Worker-centred evidence infrastructure for AI-mediated change in journalism, PR, communications, and media work."
+what-this-is-not = [
+  "an employee scoring or productivity-ranking product",
+  "a workforce, union, audience, or public sentiment detector",
+  "an automated editorial decision-maker",
+  "a substitute for consultation, collective bargaining, worker-led research, or legal advice",
+  "an NUJ-endorsed or NUJ-operated service",
+  "a deployed evidence service",
+]
+
+[pipeline]
+position = "incubating-application"
+chain = "consent-governed evidence → Rust canonical model → Zig FFI/protocol boundary → accessible observatory"
+notes = "Only synthetic fixtures and three protocol projections exist; no transport server or live connector is implemented."
+coordination = "metadatastician"
+
+[related-projects]
+projects = [
+  { name = "rsr-template-repo", relationship = "instantiated-from", notes = "Canonical RSR scaffold used for the local mint." },
+  { name = "boj-server-cartridges", relationship = "pattern-reference", notes = "Loopback and Zig adapter conventions inspected; no forwarding stub was copied as working behavior." },
+]

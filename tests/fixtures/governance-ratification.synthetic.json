@@ -1,0 +1,13 @@
+{
+  "schemaVersion": "1.0.0",
+  "decisionReference": "synthetic-decision-001",
+  "status": "not-ratified",
+  "scope": "synthetic schema exercise only",
+  "authorisedBodies": [],
+  "reviewReferences": [],
+  "unresolvedDissent": ["No real collective process or decision occurred."],
+  "conditions": [],
+  "decidedAt": null,
+  "reviewDue": null,
+  "withdrawalRoute": "not applicable to this synthetic fixture"
+}

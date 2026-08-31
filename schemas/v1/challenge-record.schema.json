@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/metadatastician/common-signal/schemas/v1/challenge-record.schema.json",
+  "title": "Common Signal challenge and remedy record",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["reference", "status", "collectivelyRepresented", "remedy"],
+  "properties": {
+    "reference": { "type": "string", "minLength": 1 },
+    "status": {
+      "enum": [
+        "submitted",
+        "under-review",
+        "corrected",
+        "upheld",
+        "rejected-with-reasons",
+        "unresolved"
+      ]
+    },
+    "collectivelyRepresented": { "type": "boolean" },
+    "remedy": { "type": "string", "minLength": 1 }
+  }
+}
+

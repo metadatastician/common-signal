@@ -1,0 +1,85 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/metadatastician/common-signal/schemas/v1/governance-review.schema.json",
+  "title": "Common Signal worker-governance review",
+  "description": "A privacy-minimised record of an authorised participant's review. It must not contain union membership lists, special-category data, or confidential workplace evidence.",
+  "x-spdx-license-identifier": "MPL-2.0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "reviewReference",
+    "participantReference",
+    "constituencies",
+    "mandate",
+    "documentsReviewed",
+    "disposition",
+    "requiredChanges",
+    "reservations",
+    "safeToAttribute",
+    "withdrawalRoute",
+    "recordedAt"
+  ],
+  "properties": {
+    "schemaVersion": { "const": "1.0.0" },
+    "reviewReference": { "type": "string", "pattern": "^[a-z0-9][a-z0-9._-]{5,127}$" },
+    "participantReference": { "type": "string", "pattern": "^[a-z0-9][a-z0-9._-]{5,127}$" },
+    "constituencies": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "enum": [
+          "journalism-worker",
+          "pr-worker",
+          "communications-worker",
+          "freelance-or-precarious-worker",
+          "recognised-union-representative",
+          "workplace-representative",
+          "equality-representative",
+          "health-and-safety-representative"
+        ]
+      }
+    },
+    "mandate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "evidenceReference", "scope"],
+      "properties": {
+        "kind": { "enum": ["self", "workplace", "recognised-union", "other-collective"] },
+        "evidenceReference": { "type": ["string", "null"] },
+        "scope": { "type": "string", "minLength": 1 }
+      }
+    },
+    "documentsReviewed": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "disposition": { "enum": ["support", "support-with-changes", "do-not-support", "abstain"] },
+    "requiredChanges": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "reservations": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "safeToAttribute": { "type": "boolean" },
+    "withdrawalRoute": { "type": "string", "minLength": 1 },
+    "recordedAt": { "type": "string", "format": "date-time" }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "disposition": { "const": "support-with-changes" } } },
+      "then": { "properties": { "requiredChanges": { "minItems": 1 } } }
+    },
+    {
+      "if": { "properties": { "disposition": { "const": "do-not-support" } } },
+      "then": { "properties": { "reservations": { "minItems": 1 } } }
+    }
+  ]
+}

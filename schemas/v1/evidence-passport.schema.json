@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/metadatastician/common-signal/schemas/v1/evidence-passport.schema.json",
+  "title": "Common Signal evidence passport",
+  "description": "Evidence metadata and inference boundaries that must travel with every claim.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "sourceClass",
+    "unit",
+    "inferenceBoundary",
+    "workerConsent",
+    "collectiveGovernance",
+    "synthetic"
+  ],
+  "properties": {
+    "sourceClass": { "type": "string", "minLength": 1 },
+    "unit": { "type": "string", "minLength": 1 },
+    "inferenceBoundary": { "type": "string", "minLength": 1 },
+    "workerConsent": { "type": "boolean" },
+    "collectiveGovernance": { "type": "boolean" },
+    "synthetic": { "type": "boolean" }
+  }
+}
+

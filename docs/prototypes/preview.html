@@ -1,0 +1,1553 @@
+<!doctype html>
+<!-- SPDX-License-Identifier: CC-BY-SA-4.0 -->
+<html lang="en" data-theme="system" data-density="comfortable" data-text="normal">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <meta name="description" content="Common Signal: a public-interest prototype for understanding AI and communicative life.">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src data:; style-src 'sha256-ucGxLFXcmseJW8y0qLIuWywO05VpoZoRntFj/WSDiwU='; script-src 'sha256-Qzk+g2Seh+/QbQG3ULDYbTXSBqqHeSKWHoLcsLiS1GQ='; connect-src 'none'; font-src 'none'; media-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'; manifest-src 'none'; worker-src 'none'">
+  <title>Common Signal — AI and Communicative Life Observatory</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --canvas: #f6f4ee;
+      --surface: #fffdf8;
+      --surface-raised: #ffffff;
+      --ink: #172026;
+      --muted: #56636a;
+      --subtle: #6d777c;
+      --rule: #d7d5cd;
+      --rule-strong: #aab3b6;
+      --blue: #183d59;
+      --blue-hover: #102f47;
+      --blue-soft: #e6eef3;
+      --teal: #087f73;
+      --teal-soft: #e0f2ef;
+      --amber: #9a5a00;
+      --amber-soft: #f8ead1;
+      --coral: #b6443c;
+      --coral-soft: #f7e3df;
+      --pulse: #101b21;
+      --pulse-ink: #f7f4ea;
+      --focus: #0067c5;
+      --shadow: 0 10px 30px rgba(23, 32, 38, .08);
+      --text-scale: 1;
+      --space-scale: 1;
+      --page-pad: clamp(1rem, 4vw, 3rem);
+      --measure: 72rem;
+      --reading: 68ch;
+      --radius: .5rem;
+    }
+
+    html[data-theme="dark"] {
+      color-scheme: dark;
+      --canvas: #10171b;
+      --surface: #151f24;
+      --surface-raised: #1a262c;
+      --ink: #edf1ee;
+      --muted: #b7c1c4;
+      --subtle: #96a3a7;
+      --rule: #35454b;
+      --rule-strong: #627279;
+      --blue: #8fc1e2;
+      --blue-hover: #b1d5ec;
+      --blue-soft: #1f3542;
+      --teal: #70d3c5;
+      --teal-soft: #173e3a;
+      --amber: #f0b461;
+      --amber-soft: #44331e;
+      --coral: #ef8c83;
+      --coral-soft: #482a29;
+      --pulse: #070d10;
+      --pulse-ink: #f7f4ea;
+      --focus: #82c8ff;
+      --shadow: 0 12px 34px rgba(0, 0, 0, .26);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      html[data-theme="system"] {
+        color-scheme: dark;
+        --canvas: #10171b;
+        --surface: #151f24;
+        --surface-raised: #1a262c;
+        --ink: #edf1ee;
+        --muted: #b7c1c4;
+        --subtle: #96a3a7;
+        --rule: #35454b;
+        --rule-strong: #627279;
+        --blue: #8fc1e2;
+        --blue-hover: #b1d5ec;
+        --blue-soft: #1f3542;
+        --teal: #70d3c5;
+        --teal-soft: #173e3a;
+        --amber: #f0b461;
+        --amber-soft: #44331e;
+        --coral: #ef8c83;
+        --coral-soft: #482a29;
+        --pulse: #070d10;
+        --focus: #82c8ff;
+        --shadow: 0 12px 34px rgba(0, 0, 0, .26);
+      }
+    }
+
+    html[data-density="compact"] { --space-scale: .78; }
+    html[data-text="large"] { --text-scale: 1.14; }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      min-width: 20rem;
+      background: var(--canvas);
+      color: var(--ink);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: calc(1rem * var(--text-scale));
+      line-height: 1.55;
+      text-rendering: optimizeLegibility;
+    }
+
+    button, input, select { font: inherit; }
+    button, select { cursor: pointer; }
+    button:disabled { cursor: not-allowed; opacity: .55; }
+    a { color: var(--blue); text-underline-offset: .18em; }
+    a:hover { color: var(--blue-hover); }
+    :focus-visible { outline: .2rem solid var(--focus); outline-offset: .18rem; }
+    [hidden] { display: none !important; }
+    .visually-hidden {
+      position: absolute !important;
+      width: 1px !important;
+      height: 1px !important;
+      padding: 0 !important;
+      margin: -1px !important;
+      overflow: hidden !important;
+      clip: rect(0, 0, 0, 0) !important;
+      white-space: nowrap !important;
+      border: 0 !important;
+    }
+    .skip-link {
+      position: fixed;
+      z-index: 100;
+      top: .75rem;
+      left: .75rem;
+      padding: .7rem 1rem;
+      transform: translateY(-200%);
+      background: var(--ink);
+      color: var(--canvas);
+      border-radius: .25rem;
+    }
+    .skip-link:focus { transform: none; }
+
+    .shell { width: min(100%, calc(var(--measure) + 2 * var(--page-pad))); margin-inline: auto; padding-inline: var(--page-pad); }
+    .site-header { background: var(--surface); border-bottom: 1px solid var(--rule); }
+    .masthead {
+      min-height: 4.7rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding-block: .75rem;
+    }
+    .brand { display: flex; align-items: center; gap: .75rem; min-width: 0; }
+    .brand-mark {
+      width: 2.25rem;
+      height: 2.25rem;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      align-items: end;
+      gap: .2rem;
+      padding: .4rem;
+      background: var(--blue);
+      border-radius: .3rem;
+    }
+    .brand-mark i { display: block; background: var(--surface); }
+    .brand-mark i:nth-child(1) { height: 40%; }
+    .brand-mark i:nth-child(2) { height: 95%; }
+    .brand-mark i:nth-child(3) { height: 68%; }
+    .brand-name { font-weight: 780; letter-spacing: -.02em; line-height: 1.1; }
+    .brand-sub { display: block; margin-top: .12rem; color: var(--muted); font-size: .76rem; font-weight: 540; letter-spacing: .02em; }
+    .header-tools { display: flex; align-items: center; gap: .5rem; }
+    .prototype-badge {
+      display: inline-flex;
+      align-items: center;
+      min-height: 2rem;
+      padding: .25rem .6rem;
+      border: 1px solid var(--amber);
+      border-radius: 999px;
+      color: var(--amber);
+      font-size: .75rem;
+      font-weight: 740;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+    }
+
+    .icon-button, .quiet-button, .primary-button, .secondary-button, .chip-button, .segmented button {
+      min-height: 2.75rem;
+      border: 1px solid var(--rule-strong);
+      border-radius: .35rem;
+      background: var(--surface);
+      color: var(--ink);
+      font-weight: 680;
+    }
+    .icon-button { min-width: 2.75rem; padding: .45rem .7rem; }
+    .quiet-button { padding: .55rem .85rem; }
+    .primary-button { padding: .68rem 1rem; border-color: var(--blue); background: var(--blue); color: #fff; }
+    .primary-button:hover { background: var(--blue-hover); }
+    .secondary-button { padding: .68rem 1rem; border-color: var(--blue); color: var(--blue); }
+    .quiet-button:hover, .secondary-button:hover, .icon-button:hover { background: var(--blue-soft); }
+    .button-row { display: flex; flex-wrap: wrap; gap: .65rem; align-items: center; }
+
+    .primary-nav { border-top: 1px solid var(--rule); overflow-x: auto; scrollbar-width: thin; }
+    .primary-nav .shell { display: flex; gap: .2rem; }
+    .nav-link {
+      flex: none;
+      min-height: 3rem;
+      display: inline-flex;
+      align-items: center;
+      padding: .65rem .85rem;
+      color: var(--muted);
+      text-decoration: none;
+      font-size: .9rem;
+      font-weight: 680;
+      border-bottom: .2rem solid transparent;
+    }
+    .nav-link:hover { color: var(--ink); background: var(--blue-soft); }
+    .nav-link[aria-current="page"] { color: var(--blue); border-bottom-color: var(--blue); }
+
+    .system-strip { background: var(--blue); color: #fff; }
+    .system-strip .shell { display: flex; gap: .85rem; align-items: center; min-height: 2.5rem; font-size: .8rem; }
+    .system-strip strong { font-weight: 760; }
+    .system-strip button { margin-left: auto; min-height: 2rem; padding: .2rem .65rem; border: 1px solid rgba(255,255,255,.7); border-radius: .25rem; background: transparent; color: #fff; }
+
+    main { min-height: 70vh; }
+    .page { padding-block: calc(2.25rem * var(--space-scale)) calc(4.5rem * var(--space-scale)); }
+    .page-head { max-width: 54rem; margin-bottom: calc(2rem * var(--space-scale)); }
+    .eyebrow { margin: 0 0 .65rem; color: var(--teal); font-size: .78rem; font-weight: 800; letter-spacing: .11em; text-transform: uppercase; }
+    h1, h2, h3 { color: var(--ink); line-height: 1.12; text-wrap: balance; }
+    h1 { max-width: 18ch; margin: 0 0 1rem; font: 700 clamp(2.35rem, 7vw, 5.6rem)/.98 Georgia, ui-serif, serif; letter-spacing: -.045em; }
+    h2 { margin: 0 0 1rem; font: 700 clamp(1.65rem, 3vw, 2.45rem)/1.08 Georgia, ui-serif, serif; letter-spacing: -.025em; }
+    h3 { margin: 0 0 .6rem; font-size: 1.02rem; }
+    p { margin-block: 0 1rem; }
+    .lede { max-width: 62ch; color: var(--muted); font-size: clamp(1.05rem, 2vw, 1.3rem); line-height: 1.55; }
+    .fine-print { color: var(--muted); font-size: .79rem; }
+    .micro { color: var(--muted); font-size: .72rem; }
+    .mt-1 { margin-top: 1rem; }
+    .mt-2 { margin-top: 2rem; }
+    .my-2 { margin-block: 2rem; }
+    .section-rule { margin-block: calc(3rem * var(--space-scale)); border: 0; border-top: 1px solid var(--rule); }
+
+    .notice {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: .75rem;
+      padding: calc(1rem * var(--space-scale));
+      border-left: .25rem solid var(--amber);
+      background: var(--amber-soft);
+      color: var(--ink);
+      border-radius: 0 var(--radius) var(--radius) 0;
+    }
+    .notice strong { display: block; margin-bottom: .2rem; }
+    .notice-mark { color: var(--amber); font-weight: 900; }
+    .notice.coral { border-left-color: var(--coral); background: var(--coral-soft); }
+
+    .hero-grid { display: grid; grid-template-columns: minmax(0, 1.65fr) minmax(16rem, .7fr); gap: clamp(2rem, 6vw, 5rem); align-items: end; }
+    .hero-aside { padding: 1.2rem; border-top: .25rem solid var(--teal); background: var(--surface); }
+    .hero-aside dl { margin: 0; }
+    .hero-aside div { padding-block: .7rem; border-bottom: 1px solid var(--rule); }
+    .hero-aside div:last-child { border-bottom: 0; }
+    dt { color: var(--muted); font-size: .74rem; font-weight: 760; letter-spacing: .06em; text-transform: uppercase; }
+    dd { margin: .15rem 0 0; font-weight: 720; }
+
+    .story-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; }
+    .story-card { position: relative; display: flex; flex-direction: column; min-height: 20rem; padding: 1.2rem; border: 1px solid var(--rule); background: var(--surface); border-radius: var(--radius); }
+    .story-card .story-kicker { color: var(--teal); font-size: .75rem; font-weight: 780; text-transform: uppercase; letter-spacing: .06em; }
+    .story-card h3 { margin-top: .8rem; font: 700 1.35rem/1.18 Georgia, ui-serif, serif; }
+    .story-card p { color: var(--muted); }
+    .story-card .evidence-line { margin-top: auto; padding-top: 1rem; border-top: 1px solid var(--rule); font-size: .79rem; }
+    .confidence { display: inline-flex; align-items: center; gap: .35rem; font-weight: 750; }
+    .confidence::before { content: ""; width: .55rem; height: .55rem; border-radius: 50%; background: var(--teal); }
+    .confidence.medium::before { background: var(--amber); }
+    .confidence.low::before { background: var(--coral); }
+
+    .question-strip { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .question-card { padding: 1.2rem; background: var(--blue); color: #fff; border-radius: var(--radius); }
+    .question-card h3, .question-card p { color: #fff; }
+    .question-card a { color: #fff; font-weight: 750; }
+
+    .filter-panel { padding: 1rem; border: 1px solid var(--rule); background: var(--surface); border-radius: var(--radius); }
+    .filter-grid { display: grid; grid-template-columns: minmax(14rem, 2fr) repeat(3, minmax(9rem, 1fr)); gap: .8rem; align-items: end; }
+    label, .label { display: block; color: var(--muted); font-size: .76rem; font-weight: 760; letter-spacing: .02em; }
+    input[type="search"], select {
+      width: 100%;
+      min-height: 2.75rem;
+      margin-top: .3rem;
+      padding: .55rem .7rem;
+      border: 1px solid var(--rule-strong);
+      border-radius: .3rem;
+      background: var(--surface-raised);
+      color: var(--ink);
+    }
+    input[type="checkbox"] { width: 1.1rem; height: 1.1rem; accent-color: var(--blue); }
+    .check-label { display: inline-flex; gap: .5rem; align-items: flex-start; color: var(--ink); font-size: .88rem; }
+    details { margin-top: .8rem; }
+    summary { min-height: 2.5rem; display: flex; align-items: center; width: max-content; max-width: 100%; color: var(--blue); font-weight: 730; cursor: pointer; }
+    .advanced-grid { display: grid; grid-template-columns: repeat(4, minmax(10rem, 1fr)); gap: .8rem; padding-top: .8rem; }
+    .applied { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem; margin-top: 1rem; }
+    .chip { display: inline-flex; align-items: center; min-height: 2rem; padding: .2rem .6rem; border-radius: 999px; background: var(--blue-soft); color: var(--blue); font-size: .78rem; font-weight: 720; }
+    .chip-button { min-height: 2rem; padding: .2rem .6rem; border-radius: 999px; color: var(--blue); }
+
+    .pulse-layout { display: grid; grid-template-columns: minmax(0, 1.65fr) minmax(18rem, .7fr); gap: 1rem; margin-top: 1rem; }
+    .pulse-panel { overflow: hidden; border-radius: var(--radius); background: var(--pulse); color: var(--pulse-ink); box-shadow: var(--shadow); }
+    .pulse-toolbar { min-height: 3.3rem; display: flex; flex-wrap: wrap; gap: .5rem; align-items: center; padding: .55rem .75rem; border-bottom: 1px solid rgba(255,255,255,.18); }
+    .pulse-toolbar strong { margin-right: auto; }
+    .pulse-toolbar button { min-height: 2.25rem; padding: .3rem .65rem; border: 1px solid rgba(255,255,255,.45); border-radius: .25rem; background: transparent; color: var(--pulse-ink); }
+    .pulse-toolbar button[aria-pressed="true"] { background: var(--pulse-ink); color: var(--pulse); }
+    .pulse-field { position: relative; min-height: 31rem; overflow: hidden; isolation: isolate; }
+    .pulse-field::before {
+      content: "sampled public expressions";
+      position: absolute;
+      inset: auto 1rem .75rem auto;
+      color: rgba(255,255,255,.42);
+      font-size: .66rem;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+    .orb {
+      position: absolute;
+      display: grid;
+      place-items: center;
+      width: 3.4rem;
+      height: 3.4rem;
+      padding: .25rem;
+      border: .14rem solid rgba(255,255,255,.48);
+      border-radius: 50%;
+      background: #507486;
+      color: #fff;
+      font-size: .64rem;
+      font-weight: 780;
+      line-height: 1;
+      text-align: center;
+      box-shadow: 0 0 0 .25rem rgba(255,255,255,.04);
+      animation: drift 7s ease-in-out infinite alternate;
+    }
+    .orb:hover, .orb:focus-visible { z-index: 5; transform: scale(1.18); }
+    .orb.selected { z-index: 4; box-shadow: 0 0 0 .3rem #fff; }
+    .orb.size-s { width: 2.4rem; height: 2.4rem; font-size: 0; }
+    .orb.size-l { width: 4.5rem; height: 4.5rem; font-size: .72rem; }
+    .orb.joy { background: #b86b00; }
+    .orb.hope { background: #087f73; }
+    .orb.concern { background: #356a91; }
+    .orb.anger { background: #a73c35; }
+    .orb.sadness { background: #665a8c; }
+    .orb.confusion { background: #75622c; }
+    .orb.mixed { background: #53656d; }
+    .orb.unclassifiable { background: #485158; border-style: dashed; }
+    .pulse-field.paused .orb { animation-play-state: paused; }
+    @keyframes drift { from { translate: 0 -.3rem; } to { translate: .35rem .45rem; } }
+    .pos-0{left:4%;top:8%}.pos-1{left:19%;top:5%}.pos-2{left:37%;top:11%}.pos-3{left:56%;top:6%}.pos-4{left:76%;top:10%}
+    .pos-5{left:88%;top:25%}.pos-6{left:68%;top:27%}.pos-7{left:48%;top:24%}.pos-8{left:28%;top:29%}.pos-9{left:8%;top:31%}
+    .pos-10{left:16%;top:49%}.pos-11{left:36%;top:44%}.pos-12{left:56%;top:48%}.pos-13{left:79%;top:45%}.pos-14{left:88%;top:62%}
+    .pos-15{left:67%;top:66%}.pos-16{left:47%;top:63%}.pos-17{left:26%;top:68%}.pos-18{left:5%;top:71%}.pos-19{left:14%;top:84%}
+    .pos-20{left:34%;top:80%}.pos-21{left:54%;top:83%}.pos-22{left:73%;top:82%}.pos-23{left:88%;top:84%}
+    .delay-0{animation-delay:0s}.delay-1{animation-delay:-1.7s}.delay-2{animation-delay:-3.2s}.delay-3{animation-delay:-4.6s}
+
+    .pulse-side { display: flex; flex-direction: column; gap: 1rem; }
+    .insight-card, .surface-card { padding: 1rem; border: 1px solid var(--rule); background: var(--surface); border-radius: var(--radius); }
+    .insight-card blockquote { margin: .8rem 0; font: 700 1.18rem/1.4 Georgia, ui-serif, serif; }
+    .meta-list { display: grid; grid-template-columns: 1fr 1fr; gap: .65rem; margin: 1rem 0 0; }
+    .meta-list div { min-width: 0; }
+    .meta-list dd { font-size: .84rem; overflow-wrap: anywhere; }
+    .trend-chart { width: 100%; height: 6rem; overflow: visible; }
+    .trend-chart path { fill: none; stroke: var(--teal); stroke-width: 3; vector-effect: non-scaling-stroke; }
+    .trend-chart line { stroke: var(--rule); vector-effect: non-scaling-stroke; }
+    .distribution { display: grid; gap: .55rem; margin-top: .8rem; }
+    .bar-row { display: grid; grid-template-columns: 5.5rem 1fr 2.2rem; gap: .5rem; align-items: center; font-size: .78rem; }
+    .bar-track { height: .55rem; overflow: hidden; border-radius: 999px; background: var(--rule); }
+    .bar-fill { height: 100%; background: var(--teal); }
+    .w-0{width:0}.w-1{width:10%}.w-2{width:20%}.w-3{width:30%}.w-4{width:40%}.w-5{width:50%}.w-6{width:60%}.w-7{width:70%}.w-8{width:80%}.w-9{width:90%}.w-10{width:100%}
+
+    .table-wrap { width: 100%; overflow-x: auto; margin-top: 1rem; border: 1px solid var(--rule); border-radius: var(--radius); background: var(--surface); }
+    table { width: 100%; border-collapse: collapse; font-size: .82rem; }
+    caption { padding: .9rem; color: var(--muted); text-align: left; font-weight: 680; }
+    th, td { padding: .65rem .7rem; border-top: 1px solid var(--rule); text-align: left; vertical-align: top; }
+    th { color: var(--muted); font-size: .7rem; letter-spacing: .04em; text-transform: uppercase; }
+    tbody tr:hover { background: var(--blue-soft); }
+
+    .question-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .8rem; }
+    .question-option { min-height: 9rem; padding: 1rem; border: 1px solid var(--rule); border-radius: var(--radius); background: var(--surface); color: var(--ink); text-align: left; }
+    .question-option:hover, .question-option[aria-pressed="true"] { border-color: var(--blue); background: var(--blue-soft); }
+    .question-option span { display: block; margin-bottom: .45rem; color: var(--teal); font-size: .72rem; font-weight: 800; text-transform: uppercase; letter-spacing: .05em; }
+    .evidence-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; margin-top: 1rem; }
+    .evidence-card { padding: 1rem; border-left: .25rem solid var(--teal); background: var(--surface); }
+    .evidence-card h3 { max-width: 36ch; }
+    .evidence-card .card-footer { display: flex; flex-wrap: wrap; gap: .5rem; align-items: center; margin-top: 1rem; padding-top: .8rem; border-top: 1px solid var(--rule); }
+
+    .workflow { display: grid; grid-template-columns: repeat(6, 1fr); gap: .4rem; margin: 1rem 0 2rem; }
+    .workflow button { min-height: 4.6rem; padding: .65rem .35rem; border: 1px solid var(--rule); background: var(--surface); color: var(--ink); font-size: .78rem; font-weight: 720; }
+    .workflow button[aria-pressed="true"] { border-color: var(--blue); background: var(--blue); color: #fff; }
+    .work-layout { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(18rem, .8fr); gap: 1rem; }
+    .profile-list { display: grid; gap: .8rem; }
+    .profile-row { display: grid; grid-template-columns: minmax(9rem, .7fr) 1.3fr; gap: 1rem; padding-bottom: .8rem; border-bottom: 1px solid var(--rule); }
+    .profile-value { font-weight: 760; }
+    .profile-value.good { color: var(--teal); }
+    .profile-value.caution { color: var(--amber); }
+    .profile-value.risk { color: var(--coral); }
+
+    .methods-layout, .system-layout { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(18rem, .75fr); gap: 1rem; }
+    .passport { border: 1px solid var(--rule); background: var(--surface); border-radius: var(--radius); }
+    .passport-head { padding: 1rem; border-bottom: 1px solid var(--rule); }
+    .passport-grid { display: grid; grid-template-columns: repeat(2, 1fr); }
+    .passport-grid div { padding: .85rem 1rem; border-right: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
+    .passport-grid div:nth-child(even) { border-right: 0; }
+    .passport-grid div:nth-last-child(-n+2) { border-bottom: 0; }
+
+    .health-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: .7rem; }
+    .health-item { padding: .8rem; border: 1px solid var(--rule); background: var(--surface); border-radius: var(--radius); }
+    .health-status { display: inline-flex; gap: .35rem; align-items: center; font-size: .76rem; font-weight: 780; }
+    .health-status::before { content: ""; width: .6rem; height: .6rem; border-radius: 50%; background: var(--teal); }
+    .health-status.warn::before { background: var(--amber); }
+    .health-status.fail::before { background: var(--coral); }
+    .registry-list { display: grid; gap: .4rem; }
+    .registry-list button { width: 100%; min-height: 2.6rem; padding: .45rem .65rem; border: 1px solid var(--rule); background: var(--surface); color: var(--ink); text-align: left; }
+    .registry-list button[aria-pressed="true"] { border-color: var(--blue); background: var(--blue-soft); }
+    pre {
+      max-height: 28rem;
+      overflow: auto;
+      margin: 0;
+      padding: 1rem;
+      border: 1px solid var(--rule);
+      border-radius: var(--radius);
+      background: var(--pulse);
+      color: var(--pulse-ink);
+      font: .76rem/1.55 ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", monospace;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+      tab-size: 2;
+    }
+    .tabs { display: flex; gap: .35rem; margin-bottom: .6rem; }
+    .tabs button { min-height: 2.5rem; padding: .4rem .7rem; border: 1px solid var(--rule); background: var(--surface); color: var(--ink); }
+    .tabs button[aria-selected="true"] { border-color: var(--blue); background: var(--blue); color: #fff; }
+    .proof-ladder { counter-reset: proof; display: grid; gap: .75rem; margin: 1rem 0 0; padding: 0; list-style: none; }
+    .proof-ladder li { counter-increment: proof; display: grid; grid-template-columns: 2.5rem 1fr; gap: .75rem; padding: .8rem; border: 1px solid var(--rule); background: var(--surface); }
+    .proof-ladder li::before { content: counter(proof); display: grid; place-items: center; width: 2.2rem; height: 2.2rem; border-radius: 50%; background: var(--blue-soft); color: var(--blue); font-weight: 820; }
+    .proof-ladder strong { display: block; }
+    .not-proved { color: var(--amber); font-size: .72rem; font-weight: 780; text-transform: uppercase; letter-spacing: .05em; }
+
+    .diagnostic-list { margin: 1rem 0 0; padding: 0; list-style: none; }
+    .diagnostic-list li { display: grid; grid-template-columns: 5rem 1fr; gap: .6rem; padding: .55rem 0; border-bottom: 1px solid var(--rule); font-size: .82rem; }
+    .diagnostic-list strong { color: var(--teal); }
+    .diagnostic-list strong.warn { color: var(--amber); }
+    .diagnostic-list strong.fail { color: var(--coral); }
+
+    dialog { width: min(92vw, 40rem); max-height: 86vh; overflow: auto; padding: 0; border: 1px solid var(--rule-strong); border-radius: .65rem; background: var(--surface); color: var(--ink); box-shadow: var(--shadow); }
+    dialog::backdrop { background: rgba(8, 15, 19, .68); }
+    .dialog-head { position: sticky; top: 0; z-index: 1; display: flex; justify-content: space-between; align-items: center; gap: 1rem; padding: 1rem; border-bottom: 1px solid var(--rule); background: var(--surface); }
+    .dialog-head h2 { margin: 0; font-size: 1.45rem; }
+    .dialog-body { padding: 1rem; }
+    .setting-group { padding-block: .8rem; border-bottom: 1px solid var(--rule); }
+    .setting-group:last-child { border-bottom: 0; }
+    .segmented { display: inline-flex; flex-wrap: wrap; gap: .3rem; margin-top: .45rem; }
+    .segmented button { min-height: 2.5rem; padding: .35rem .7rem; }
+    .segmented button[aria-pressed="true"] { border-color: var(--blue); background: var(--blue); color: #fff; }
+    kbd { padding: .1rem .35rem; border: 1px solid var(--rule-strong); border-bottom-width: .15rem; border-radius: .22rem; background: var(--surface-raised); font: .75rem ui-monospace, monospace; }
+    .shortcut-list { display: grid; grid-template-columns: auto 1fr; gap: .55rem 1rem; align-items: center; }
+
+    .toast { position: fixed; z-index: 90; right: 1rem; bottom: 1rem; max-width: min(24rem, calc(100vw - 2rem)); padding: .8rem 1rem; border-left: .25rem solid var(--teal); border-radius: var(--radius); background: var(--surface-raised); color: var(--ink); box-shadow: var(--shadow); }
+    .recovery-banner { padding: .75rem 1rem; background: var(--coral-soft); color: var(--ink); border-bottom: 1px solid var(--coral); }
+    .site-footer { padding-block: 2rem; border-top: 1px solid var(--rule); background: var(--surface); }
+    .footer-grid { display: grid; grid-template-columns: 1.3fr .7fr; gap: 2rem; }
+    .footer-grid p { max-width: 62ch; color: var(--muted); font-size: .83rem; }
+
+    @media (max-width: 58rem) {
+      .hero-grid, .pulse-layout, .work-layout, .methods-layout, .system-layout { grid-template-columns: 1fr; }
+      .story-grid, .question-grid { grid-template-columns: 1fr 1fr; }
+      .filter-grid { grid-template-columns: 1fr 1fr; }
+      .advanced-grid { grid-template-columns: 1fr 1fr; }
+      .workflow { grid-template-columns: repeat(3, 1fr); }
+      .health-grid { grid-template-columns: 1fr 1fr; }
+      .pulse-field { min-height: 27rem; }
+    }
+    @media (max-width: 38rem) {
+      .brand-sub, .prototype-badge { display: none; }
+      .masthead { min-height: 4rem; }
+      .story-grid, .question-grid, .question-strip, .evidence-grid, .filter-grid, .advanced-grid, .footer-grid { grid-template-columns: 1fr; }
+      .workflow { grid-template-columns: 1fr 1fr; }
+      .health-grid, .passport-grid { grid-template-columns: 1fr; }
+      .passport-grid div { border-right: 0; }
+      .passport-grid div:nth-last-child(-n+2) { border-bottom: 1px solid var(--rule); }
+      .passport-grid div:last-child { border-bottom: 0; }
+      .pulse-field { min-height: 24rem; }
+      .orb.size-l { width: 3.7rem; height: 3.7rem; }
+      .profile-row { grid-template-columns: 1fr; gap: .2rem; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; }
+    }
+    html[data-motion="off"] *, html[data-motion="off"] *::before, html[data-motion="off"] *::after { animation: none !important; scroll-behavior: auto !important; transition: none !important; }
+    @media print {
+      .site-header, .system-strip, .filter-panel, .pulse-toolbar, .button-row, dialog, .toast, .site-footer { display: none !important; }
+      body { background: white; color: black; }
+      .page { display: block !important; break-after: page; }
+      .pulse-panel { color: black; background: white; box-shadow: none; border: 1px solid #999; }
+      .pulse-field { display: none; }
+      .table-wrap { display: block !important; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+  <div id="recovery-banner" class="recovery-banner" role="alert" hidden></div>
+
+  <header class="site-header">
+    <div class="shell masthead">
+      <div class="brand" aria-label="Common Signal, AI and Communicative Life Observatory">
+        <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span class="brand-name">Common Signal<span class="brand-sub">AI &amp; communicative life observatory</span></span>
+      </div>
+      <div class="header-tools">
+        <span class="prototype-badge">Synthetic prototype</span>
+        <button id="adaptive-shortcut" class="quiet-button" type="button" aria-label="Open locally preferred section" hidden></button>
+        <button id="help-open" class="icon-button" type="button" aria-label="Keyboard help">?</button>
+        <button id="settings-open" class="icon-button" type="button" aria-label="Display and privacy settings">Aa</button>
+      </div>
+    </div>
+    <nav class="primary-nav" aria-label="Primary">
+      <div class="shell">
+        <a class="nav-link" href="#briefing" data-route="briefing" aria-current="page">Briefing</a>
+        <a class="nav-link" href="#pulse" data-route="pulse">Pulse field</a>
+        <a class="nav-link" href="#explore" data-route="explore">Explore</a>
+        <a class="nav-link" href="#work" data-route="work">Work &amp; power</a>
+        <a class="nav-link" href="#methods" data-route="methods">Methods</a>
+        <a class="nav-link" href="#system" data-route="system">System</a>
+      </div>
+    </nav>
+  </header>
+
+  <div class="system-strip">
+    <div class="shell">
+      <strong>Prototype boundary</strong>
+      <span>Offline, synthetic and non-predictive. No live collection or tracking.</span>
+      <button type="button" data-route-button="methods">Why?</button>
+    </div>
+  </div>
+
+  <main id="main" tabindex="-1">
+    <section id="briefing" class="page shell" data-page="briefing">
+      <div class="hero-grid">
+        <div>
+          <p class="eyebrow">This week in communicative life</p>
+          <h1>AI changes more than tasks. It changes who can be heard.</h1>
+          <p class="lede">Follow what changed, whose work and attention moved, what evidence supports the claim, and what remains genuinely uncertain.</p>
+          <div class="button-row">
+            <button class="primary-button" type="button" data-scroll-to="weekly-stories">Read the briefing</button>
+            <button class="secondary-button" type="button" data-route-button="pulse">Open the Pulse field</button>
+          </div>
+        </div>
+        <aside class="hero-aside" aria-labelledby="briefing-scope-title">
+          <h2 id="briefing-scope-title" class="visually-hidden">Briefing scope</h2>
+          <dl>
+            <div><dt>Question</dt><dd>Who gains voice, capacity or control?</dd></div>
+            <div><dt>Window</dt><dd>24–30 August 2026</dd></div>
+            <div><dt>Evidence</dt><dd>Illustrative records only</dd></div>
+            <div><dt>Next review</dt><dd>Requires editorial sign-off</dd></div>
+          </dl>
+        </aside>
+      </div>
+
+      <div class="notice mt-2">
+        <span class="notice-mark" aria-hidden="true">i</span>
+        <div><strong>This prototype makes no claim about real people or current events.</strong>Every quotation, organisation, measurement and trend below is synthetic. The purpose is to test the product’s epistemic and interaction design.</div>
+      </div>
+
+      <hr class="section-rule">
+      <section id="weekly-stories" aria-labelledby="weekly-title">
+        <p class="eyebrow">Three signals worth following</p>
+        <h2 id="weekly-title">A briefing, not a scoreboard</h2>
+        <div class="story-grid">
+          <article class="story-card">
+            <span class="story-kicker">Work &amp; verification</span>
+            <h3>Faster first drafts did not mean less work</h3>
+            <p>In the illustrative local-news workflow, drafting fell by twelve minutes while checking, correction and coordination rose by nineteen.</p>
+            <div class="evidence-line"><span class="confidence medium">Moderate evidence</span><br><span class="fine-print">Small workflow study · synthetic</span></div>
+          </article>
+          <article class="story-card">
+            <span class="story-kicker">Circulation &amp; plurality</span>
+            <h3>More output, fewer distinct frames</h3>
+            <p>Volume increased across the sample, but source and framing diversity narrowed where organisations reused the same model and templates.</p>
+            <div class="evidence-line"><span class="confidence low">Low evidence</span><br><span class="fine-print">Model-assisted content sample · synthetic</span></div>
+          </article>
+          <article class="story-card">
+            <span class="story-kicker">Public expression</span>
+            <h3>Concern rose, but “public feeling” remains unknowable</h3>
+            <p>Concern appeared more often in the sampled expressions. Platform participation, model classification and query choices prevent population inference.</p>
+            <div class="evidence-line"><span class="confidence medium">Moderate classification confidence</span><br><span class="fine-print">Sampled expressions · synthetic</span></div>
+          </article>
+        </div>
+      </section>
+
+      <hr class="section-rule">
+      <section aria-labelledby="ask-title">
+        <p class="eyebrow">Follow your own question</p>
+        <h2 id="ask-title">Move from signal to mechanism</h2>
+        <div class="question-strip">
+          <article class="question-card"><h3>Who acquired new capacity?</h3><p>Trace changes in production, reach, knowledge, persuasion and coordination.</p><a href="#explore" data-route="explore">Explore capacity and voice</a></article>
+          <article class="question-card"><h3>Who acquired the burden?</h3><p>Trace verification, emotional labour, monitoring, correction, risk and lost discretion.</p><a href="#work" data-route="work">Explore work and control</a></article>
+        </div>
+      </section>
+    </section>
+
+    <section id="pulse" class="page shell" data-page="pulse" hidden>
+      <div class="page-head">
+        <p class="eyebrow">Public expression · experimental view</p>
+        <h1>The Pulse field</h1>
+        <p class="lede">Explore how a sampled set of public expressions gathers, moves and differs around a topic. This is closer to a cultural weather map than a poll.</p>
+      </div>
+
+      <div class="notice coral">
+        <span class="notice-mark" aria-hidden="true">!</span>
+        <div><strong>Expressions are not people, and samples are not populations.</strong>Platform participation, deletion, language, collection, ranking and automated classification all shape what appears. Emotion labels are contestable interpretations.</div>
+      </div>
+
+      <div class="filter-panel mt-1" aria-label="Pulse filters">
+        <div class="filter-grid">
+          <label>Topic, phrase or hashtag<input id="pulse-query" type="search" value="AI" autocomplete="off" spellcheck="false" aria-describedby="query-help"></label>
+          <label>Period<select id="filter-period"><option value="7d">Past 7 days</option><option value="24h">Past 24 hours</option><option value="30d">Past 30 days</option></select></label>
+          <label>Source class<select id="filter-source"><option value="all">All source classes</option><option value="social">Social expression</option><option value="journalism">Journalism</option><option value="community">Community and civic</option><option value="search">Search interest</option></select></label>
+          <label>Feeling<select id="filter-emotion"><option value="all">All classifications</option><option value="hope">Hope</option><option value="concern">Concern</option><option value="anger">Anger</option><option value="joy">Joy</option><option value="sadness">Sadness</option><option value="confusion">Confusion</option><option value="mixed">Mixed</option><option value="unclassifiable">Unclassifiable</option></select></label>
+        </div>
+        <p id="query-help" class="fine-print">Try “AI”, “local news”, “synthetic media”, “climate” or “election”. Matching is local and deterministic.</p>
+        <details>
+          <summary>Refine further</summary>
+          <div class="advanced-grid">
+            <label>Geography<select id="filter-geo"><option value="all">All geographies</option><option value="UK">United Kingdom</option><option value="EU">European Union</option><option value="US">United States</option><option value="Global South">Global South</option><option value="Unknown">Unknown</option></select></label>
+            <label>Language<select id="filter-language"><option value="all">All languages</option><option value="en">English</option><option value="fr">French</option><option value="es">Spanish</option><option value="pt">Portuguese</option><option value="unknown">Unknown</option></select></label>
+            <label>Authorship<select id="filter-authorship"><option value="all">All authorship states</option><option value="human">Human-declared</option><option value="mixed">Mixed or assisted</option><option value="unknown">Unknown</option></select></label>
+            <label>Classification confidence<select id="filter-confidence"><option value="all">Any confidence</option><option value="high">High only</option><option value="medium">Medium or higher</option></select></label>
+          </div>
+        </details>
+        <div class="applied" id="applied-filters" aria-label="Applied filters"></div>
+      </div>
+
+      <div class="pulse-layout">
+        <div class="pulse-panel">
+          <div class="pulse-toolbar">
+            <strong id="pulse-count">0 sampled expressions</strong>
+            <button id="motion-toggle" type="button" aria-pressed="true">Pause movement</button>
+            <button id="pulse-view-field" type="button" aria-pressed="true">Field</button>
+            <button id="pulse-view-list" type="button" aria-pressed="false">List</button>
+          </div>
+          <div id="pulse-field" class="pulse-field" role="group" aria-label="Interactive field of sampled expressions. Use Tab to enter, then arrow keys to move between expressions."></div>
+          <div id="pulse-table-wrap" class="table-wrap" hidden>
+            <table>
+              <caption id="pulse-table-caption">Sampled expressions matching the current filters</caption>
+              <thead><tr><th scope="col">Expression</th><th scope="col">Feeling</th><th scope="col">Source</th><th scope="col">Place</th><th scope="col">Confidence</th></tr></thead>
+              <tbody id="pulse-table-body"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <aside class="pulse-side" aria-label="Pulse interpretation">
+          <article class="insight-card" aria-labelledby="selected-title">
+            <p class="eyebrow">Selected expression</p>
+            <h2 id="selected-title" class="visually-hidden">Selected expression detail</h2>
+            <blockquote id="selected-expression">Select a point to inspect its context.</blockquote>
+            <p id="selected-warning" class="fine-print">No individual expression is evidence of a population trend.</p>
+            <dl id="selected-meta" class="meta-list"></dl>
+          </article>
+          <article class="surface-card">
+            <h3>Expression volume</h3>
+            <svg id="trend-chart" class="trend-chart" viewBox="0 0 320 90" role="img" aria-labelledby="trend-title trend-desc">
+              <title id="trend-title">Expression volume over seven days</title>
+              <desc id="trend-desc">The chart updates with the current filters. A textual summary follows.</desc>
+              <line x1="8" y1="78" x2="312" y2="78"></line>
+              <path id="trend-path" d=""></path>
+            </svg>
+            <p id="trend-summary" class="fine-print"></p>
+          </article>
+          <article class="surface-card">
+            <h3>Classification mix</h3>
+            <div id="emotion-distribution" class="distribution"></div>
+          </article>
+          <div class="button-row">
+            <button id="share-view" class="secondary-button" type="button">Copy view link</button>
+            <button id="export-view" class="quiet-button" type="button">Export JSON</button>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section id="explore" class="page shell" data-page="explore" hidden>
+      <div class="page-head">
+        <p class="eyebrow">Question-led exploration</p>
+        <h1>Begin with what you need to know</h1>
+        <p class="lede">Choose a public question first. Measures and filters follow the question instead of asking you to assemble meaning from a wall of charts.</p>
+      </div>
+      <div id="question-grid" class="question-grid" role="group" aria-label="Research questions"></div>
+      <div class="notice mt-1">
+        <span class="notice-mark" aria-hidden="true">i</span>
+        <div><strong id="explore-question-title">Who acquired new capacity?</strong><span id="explore-question-explanation">This view follows changes in production, access, reach and coordination.</span></div>
+      </div>
+      <div id="evidence-grid" class="evidence-grid"></div>
+    </section>
+
+    <section id="work" class="page shell" data-page="work" hidden>
+      <div class="page-head">
+        <p class="eyebrow">Production workflow · work system</p>
+        <h1>Where did the work go?</h1>
+        <p class="lede">A visible output may become faster while checking, exception handling, coordination or responsibility grows elsewhere.</p>
+      </div>
+      <div id="workflow" class="workflow" role="group" aria-label="Workflow stages"></div>
+      <div class="work-layout">
+        <article class="surface-card">
+          <p class="eyebrow">Illustrative workflow profile</p>
+          <h2 id="workflow-title">Gather and verify</h2>
+          <p id="workflow-description" class="lede">AI broadens retrieval, while humans assess source authority, absence, contradiction and potential harm.</p>
+          <div id="work-profile" class="profile-list"></div>
+        </article>
+        <aside>
+          <div class="notice coral"><span class="notice-mark" aria-hidden="true">!</span><div><strong>Time saved is not productivity by itself.</strong>Quality, harm, worker control, learning and public-interest value remain separate constraints.</div></div>
+          <article class="surface-card mt-1">
+            <h3>Linked communicative effect</h3>
+            <p id="linked-effect">Faster retrieval can widen the evidence considered—or narrow attention to whatever the connector can see.</p>
+            <button class="secondary-button" type="button" data-route-button="methods">Inspect the evidence model</button>
+          </article>
+        </aside>
+      </div>
+    </section>
+
+    <section id="methods" class="page shell" data-page="methods" hidden>
+      <div class="page-head">
+        <p class="eyebrow">Methods, provenance and challenge</p>
+        <h1>Every claim carries its evidence passport</h1>
+        <p class="lede">Scope, collection, transformation, uncertainty, interests, limitations and correction history travel with the claim.</p>
+      </div>
+      <div class="methods-layout">
+        <article class="passport" aria-labelledby="passport-title">
+          <div class="passport-head"><p class="eyebrow">Example evidence passport</p><h2 id="passport-title">Verification burden in a local-news workflow</h2><span class="chip">Synthetic illustration</span></div>
+          <dl class="passport-grid">
+            <div><dt>Source</dt><dd>Consented workflow diary</dd></div>
+            <div><dt>Collection date</dt><dd>2026-08-26</dd></div>
+            <div><dt>Method</dt><dd>Task timing + stimulated recall</dd></div>
+            <div><dt>Unit</dt><dd>Workflow episode</dd></div>
+            <div><dt>Sample</dt><dd>n = 12 episodes</dd></div>
+            <div><dt>Confidence</dt><dd>Moderate, not generalisable</dd></div>
+            <div><dt>Last verified</dt><dd>2026-08-29</dd></div>
+            <div><dt>Version</dt><dd>Observation 1.2</dd></div>
+          </dl>
+        </article>
+        <aside class="surface-card">
+          <h3>Inference boundary</h3>
+          <p>This evidence can describe the observed workflows. It cannot estimate national prevalence, prove causation, or predict effects in another organisation.</p>
+          <h3>Challenge status</h3>
+          <p>One unresolved methodological note: participants may change checking behaviour while observed.</p>
+          <button id="challenge-demo" class="secondary-button" type="button">Preview challenge record</button>
+        </aside>
+      </div>
+      <hr class="section-rule">
+      <section aria-labelledby="source-architecture-title">
+        <p class="eyebrow">Connector architecture</p>
+        <h2 id="source-architecture-title">Sources remain distinct</h2>
+        <p class="lede">Social expressions, journalism, search interest, surveys, workflow observations and incidents answer different questions. The system does not average them into one index.</p>
+        <div class="table-wrap">
+          <table>
+            <caption>Illustrative source classes and valid uses</caption>
+            <thead><tr><th scope="col">Source class</th><th scope="col">Can support</th><th scope="col">Cannot establish alone</th><th scope="col">Minimum safeguards</th></tr></thead>
+            <tbody>
+              <tr><td>Public expressions</td><td>Sampled themes, language and circulation</td><td>Population emotion or opinion</td><td>Aggregation, suppression, deletion policy, provenance</td></tr>
+              <tr><td>News corpora</td><td>Frames, sources, salience and information flows</td><td>Audience interpretation</td><td>Coverage map, copyright boundaries, multilingual audit</td></tr>
+              <tr><td>Search interest</td><td>Relative attention within the query system</td><td>Belief, approval or causation</td><td>Query version, geography, normalisation disclosure</td></tr>
+              <tr><td>Workflow research</td><td>Work, control, checking and coordination mechanisms</td><td>Sector-wide prevalence without sampling</td><td>Consent, worker governance, no performance reuse</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </section>
+
+    <section id="system" class="page shell" data-page="system" hidden>
+      <div class="page-head">
+        <p class="eyebrow">Inspectable system</p>
+        <h1>The prototype can explain its own shape</h1>
+        <p class="lede">Schemas, transformations, views, adapters, health checks and future proof obligations are declared as inspectable data. Reflection does not permit arbitrary execution.</p>
+      </div>
+      <div id="health-grid" class="health-grid"></div>
+      <div class="button-row mt-1">
+        <button id="run-diagnostics" class="primary-button" type="button">Run self-diagnostics</button>
+        <button id="export-spec" class="secondary-button" type="button">Export system specification</button>
+      </div>
+      <ul id="diagnostic-results" class="diagnostic-list" aria-live="polite"></ul>
+
+      <hr class="section-rule">
+      <div class="system-layout">
+        <section aria-labelledby="registry-title">
+          <p class="eyebrow">Safe reflection</p>
+          <h2 id="registry-title">Specification registry</h2>
+          <div id="registry-list" class="registry-list"></div>
+        </section>
+        <section aria-labelledby="registry-inspector-title">
+          <h2 id="registry-inspector-title" class="visually-hidden">Registry inspector</h2>
+          <pre id="registry-inspector" tabindex="0"></pre>
+        </section>
+      </div>
+
+      <hr class="section-rule">
+      <section aria-labelledby="protocol-title">
+        <p class="eyebrow">One domain, three projections</p>
+        <h2 id="protocol-title">REST, GraphQL and gRPC adapters</h2>
+        <p class="lede">Each adapter projects the same canonical query algebra and response envelope. Adapter equivalence becomes a future proof obligation.</p>
+        <div id="protocol-tabs" class="tabs" role="tablist" aria-label="Protocol examples">
+          <button id="tab-rest" type="button" role="tab" aria-controls="protocol-code" aria-selected="true" data-protocol="rest">REST</button>
+          <button id="tab-graphql" type="button" role="tab" aria-controls="protocol-code" aria-selected="false" data-protocol="graphql" tabindex="-1">GraphQL</button>
+          <button id="tab-grpc" type="button" role="tab" aria-controls="protocol-code" aria-selected="false" data-protocol="grpc" tabindex="-1">gRPC</button>
+        </div>
+        <pre id="protocol-code" role="tabpanel" aria-labelledby="tab-rest" tabindex="0"></pre>
+      </section>
+
+      <hr class="section-rule">
+      <section aria-labelledby="proof-title">
+        <p class="eyebrow">Future assurance</p>
+        <h2 id="proof-title">Proof ladder</h2>
+        <div class="notice"><span class="notice-mark" aria-hidden="true">i</span><div><strong>Architecture sketch, not completed proof.</strong>The prototype records intended claims and refinement boundaries so implementation cannot later confuse aspirations with verified properties.</div></div>
+        <ol id="proof-ladder" class="proof-ladder"></ol>
+      </section>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="shell footer-grid">
+      <div><strong>Common Signal</strong><p>A fresh, synthetic prototype for a public observatory of AI and communicative life. Built as an executable design proposition, not a deployed evidence service.</p></div>
+      <div><p><strong>Prototype status</strong><br><span id="footer-status">Ready · offline · no network requests</span></p><p><button class="quiet-button" type="button" data-route-button="system">Inspect system status</button></p></div>
+    </div>
+  </footer>
+
+  <dialog id="settings-dialog" aria-labelledby="settings-title">
+    <div class="dialog-head"><h2 id="settings-title">Display and privacy</h2><button class="icon-button" type="button" data-close-dialog="settings-dialog" aria-label="Close settings">×</button></div>
+    <div class="dialog-body">
+      <div class="setting-group"><span class="label">Colour theme</span><div class="segmented" data-setting-group="theme"><button type="button" data-setting="theme" data-value="system" aria-pressed="true">System</button><button type="button" data-setting="theme" data-value="light" aria-pressed="false">Light</button><button type="button" data-setting="theme" data-value="dark" aria-pressed="false">Dark</button></div></div>
+      <div class="setting-group"><span class="label">Information density</span><div class="segmented" data-setting-group="density"><button type="button" data-setting="density" data-value="comfortable" aria-pressed="true">Comfortable</button><button type="button" data-setting="density" data-value="compact" aria-pressed="false">Compact</button></div></div>
+      <div class="setting-group"><span class="label">Text size</span><div class="segmented" data-setting-group="text"><button type="button" data-setting="text" data-value="normal" aria-pressed="true">Standard</button><button type="button" data-setting="text" data-value="large" aria-pressed="false">Large</button></div></div>
+      <div class="setting-group"><span class="label">Motion</span><div class="segmented" data-setting-group="motion"><button type="button" data-setting="motion" data-value="system" aria-pressed="true">Follow system</button><button type="button" data-setting="motion" data-value="off" aria-pressed="false">Off</button></div></div>
+      <div class="setting-group"><label class="check-label"><input id="adaptive-setting" type="checkbox"> <span><strong>Learn my preferred section on this device</strong><br><span class="fine-print">Opt-in. Stores section visit counts locally and offers one shortcut. It never changes navigation order, records searches or sends data.</span></span></label></div>
+      <div class="setting-group"><button id="clear-local" class="quiet-button" type="button">Clear local preferences</button></div>
+    </div>
+  </dialog>
+
+  <dialog id="help-dialog" aria-labelledby="help-title">
+    <div class="dialog-head"><h2 id="help-title">Keyboard help</h2><button class="icon-button" type="button" data-close-dialog="help-dialog" aria-label="Close keyboard help">×</button></div>
+    <div class="dialog-body">
+      <p>Everything works with ordinary Tab and Shift+Tab navigation. These optional shortcuts are also available outside text fields.</p>
+      <div class="shortcut-list"><kbd>/</kbd><span>Focus Pulse search</span><kbd>1–6</kbd><span>Open the six main sections</span><kbd>?</kbd><span>Open this help</span><kbd>Esc</kbd><span>Close a dialog or clear a selected expression</span><kbd>← →</kbd><span>Move between Pulse expressions after entering the field</span></div>
+    </div>
+  </dialog>
+
+  <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+  <noscript><div class="shell notice coral my-2"><span class="notice-mark">!</span><div><strong>JavaScript is required for the interactive prototype.</strong>The final service should provide server-rendered summaries and tables as a non-JavaScript baseline.</div></div></noscript>
+
+  <script type="module">
+    const deepFreeze = (value, seen = new WeakSet()) => {
+      if (!value || typeof value !== "object" || seen.has(value)) return value;
+      seen.add(value);
+      Reflect.ownKeys(value).forEach((key) => deepFreeze(value[key], seen));
+      return Object.freeze(value);
+    };
+
+    const SYSTEM_SPEC = deepFreeze({
+      id: "common-signal",
+      version: "0.1.0-prototype",
+      status: "executable-specification",
+      trustBoundary: "offline-synthetic-no-credentials",
+      entities: {
+        communicativeEpisode: ["id", "topic", "expression", "sourceClass", "occurredAt", "provenance"],
+        workflowEpisode: ["id", "stage", "actors", "aiIntervention", "humanAuthority", "workEffects"],
+        evidenceRecord: ["source", "sourceUrl", "collectionDate", "methodology", "confidence", "lastVerified", "limitations"],
+        query: ["scope", "filters", "groupBy", "measures", "page"],
+        responseEnvelope: ["data", "provenance", "uncertainty", "warnings", "page"]
+      },
+      pipelines: {
+        pulse: [
+          { op: "validateQuery", invariant: "known-filter-domain" },
+          { op: "selectExpressions", invariant: "source-records-unchanged" },
+          { op: "applyFilters", invariant: "result-subset-of-input" },
+          { op: "privacyGate", invariant: "groups-below-threshold-suppressed" },
+          { op: "aggregate", invariant: "counts-conserve-visible-records" },
+          { op: "attachProvenance", invariant: "lineage-never-dropped" }
+        ]
+      },
+      capabilities: {
+        public: ["read:synthetic", "query:local", "export:current-view", "inspect:spec"],
+        connector: ["read:allow-listed-upstream", "write:canonical-envelope"],
+        researcher: ["compose:validated-query", "challenge:evidence"],
+        forbiddenInPrototype: ["network", "credentials", "raw-personal-identifiers", "arbitrary-code", "individual-profiling"]
+      },
+      adapters: {
+        rest: { projection: "POST /v1/query", schema: "CanonicalQuery -> ResponseEnvelope" },
+        graphql: { projection: "query Observatory($query: ObservatoryQuery!)", schema: "ObservatoryQuery -> ObservatoryResult" },
+        grpc: { projection: "Observatory.Query(QueryRequest)", schema: "QueryRequest -> QueryResponse" }
+      },
+      sourceConnectors: {
+        xSearch: { mode: "server-only", status: "not-connected", boundary: "licensed API, allow-listed queries, deletion reconciliation" },
+        bluesky: { mode: "server-only", status: "not-connected", boundary: "public protocol, sampling and moderation context retained" },
+        mastodon: { mode: "federated", status: "not-connected", boundary: "instance scope and local moderation policy retained" },
+        gdelt: { mode: "server-only", status: "not-connected", boundary: "news coverage is not audience belief" },
+        rss: { mode: "server-only", status: "not-connected", boundary: "publisher terms, update and removal handling" },
+        googleTrends: { mode: "server-only", status: "not-connected", boundary: "relative search interest is not sentiment" }
+      },
+      security: {
+        prototype: {
+          enforced: ["hash-authorised inline CSS and JavaScript", "connect-src none", "no dependencies", "no credentials", "no inline handlers", "validated state transitions"],
+          limitation: "A meta CSP cannot enforce frame-ancestors and a browser document cannot safely hold upstream credentials."
+        },
+        deployment: {
+          codeLayout: "external immutable CSS and JavaScript assets",
+          responseHeaders: ["Content-Security-Policy with script-src 'self'", "Strict-Transport-Security", "Cross-Origin-Opener-Policy", "Cross-Origin-Resource-Policy", "Permissions-Policy", "Referrer-Policy"],
+          serviceBoundary: ["server-side query validation", "cursor pagination", "rate limits", "connector allow-list", "secret isolation", "audit log", "privacy aggregation"]
+        }
+      },
+      assurance: [
+        { level: "Runtime", state: "demonstrated", claims: ["defensive parsing", "registry closure", "basic accessibility assertions", "recovery to last-known-good state"] },
+        { level: "Property tests", state: "planned", claims: ["reducer laws", "filter monotonicity", "aggregation conservation", "round-trip schemas"] },
+        { level: "Rust types", state: "planned", claims: ["closed domain enums", "capability boundaries", "validated adapters", "deterministic replay"] },
+        { level: "Creusot", state: "planned", claims: ["privacy threshold", "provenance preservation", "pure query kernel", "state invariants"] },
+        { level: "Isabelle/HOL", state: "planned", claims: ["adapter observational equivalence", "non-interference", "recovery safety", "abstract-to-Rust refinement"] }
+      ],
+      schemas: {
+        expressionRecord: {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          type: "object",
+          required: ["id", "text", "topics", "emotion", "confidence", "sourceClass", "geography", "language", "authorship", "date", "provenance"],
+          properties: {
+            id: { type: "string", pattern: "^[a-z0-9_-]+$" },
+            text: { type: "string", minLength: 1, maxLength: 500 },
+            topics: { type: "array", minItems: 1, uniqueItems: true, items: { type: "string" } },
+            emotion: { enum: ["hope", "concern", "anger", "joy", "sadness", "confusion", "mixed", "unclassifiable"] },
+            confidence: { type: "number", minimum: 0, maximum: 1 },
+            sourceClass: { enum: ["social", "journalism", "community", "search"] },
+            geography: { type: "string" },
+            language: { type: "string" },
+            authorship: { enum: ["human", "mixed", "unknown"] },
+            date: { type: "string", format: "date" },
+            provenance: { type: "object", required: ["source", "collectionDate", "methodology", "lastVerified"] }
+          },
+          additionalProperties: false
+        }
+      }
+    });
+
+    const EXPRESSIONS = deepFreeze([
+      ["e01", "I feel cautiously hopeful that the local desk can spend more time reporting.", ["AI", "local news"], "hope", .86, "journalism", "UK", "en", "human", "2026-08-24"],
+      ["e02", "I feel like every faster draft leaves me with three more things to verify.", ["AI", "local news"], "concern", .92, "social", "UK", "en", "human", "2026-08-24"],
+      ["e03", "I am feeling relieved that the transcript is searchable, but I still replay the audio.", ["AI", "work"], "mixed", .81, "community", "US", "en", "human", "2026-08-25"],
+      ["e04", "I feel angry that synthetic media corrections travel more slowly than the original post.", ["AI", "synthetic media"], "anger", .89, "social", "EU", "en", "human", "2026-08-25"],
+      ["e05", "I feel unsure whether the same five phrases are becoming everybody's public voice.", ["AI", "synthetic media"], "confusion", .73, "social", "UK", "en", "mixed", "2026-08-25"],
+      ["e06", "I feel hopeful when the tool shows me sources I would otherwise have missed.", ["AI", "journalism"], "hope", .88, "journalism", "Global South", "en", "human", "2026-08-26"],
+      ["e07", "I feel exhausted by being responsible for words I did not write.", ["AI", "work"], "sadness", .83, "community", "UK", "en", "human", "2026-08-26"],
+      ["e08", "Je me sens partagé : plus rapide, oui, mais moins certain de l'origine.", ["AI", "provenance"], "mixed", .78, "social", "EU", "fr", "human", "2026-08-26"],
+      ["e09", "I feel delighted that the archive finally speaks across languages.", ["AI", "archives"], "joy", .91, "community", "EU", "en", "human", "2026-08-27"],
+      ["e10", "I feel watched when every edit becomes a performance score.", ["AI", "work", "surveillance"], "concern", .94, "social", "UK", "en", "human", "2026-08-27"],
+      ["e11", "Siento esperanza, pero no quiero que una traducción borre la voz local.", ["AI", "local news"], "mixed", .76, "journalism", "Global South", "es", "human", "2026-08-27"],
+      ["e12", "I feel furious that an invented image became the first record of the event.", ["AI", "synthetic media"], "anger", .93, "journalism", "US", "en", "human", "2026-08-27"],
+      ["e13", "I feel calmer when uncertainty is shown before the headline, not after it.", ["AI", "trust"], "hope", .84, "community", "EU", "en", "human", "2026-08-28"],
+      ["e14", "I feel confused by a confidence score that cannot tell me confidence in what.", ["AI", "trust"], "confusion", .96, "social", "UK", "en", "human", "2026-08-28"],
+      ["e15", "I am feeling worried that election rumours are being summarised into authority.", ["AI", "election"], "concern", .9, "journalism", "US", "en", "human", "2026-08-28"],
+      ["e16", "I feel energised when community reports become visible beside national coverage.", ["AI", "local news"], "joy", .85, "community", "UK", "en", "human", "2026-08-28"],
+      ["e17", "Eu me sinto invisível quando o sistema não reconhece a variante da minha língua.", ["AI", "language"], "sadness", .88, "social", "Global South", "pt", "human", "2026-08-29"],
+      ["e18", "I feel that climate urgency becomes strangely flat in generated summaries.", ["AI", "climate"], "concern", .77, "journalism", "EU", "en", "mixed", "2026-08-29"],
+      ["e19", "I feel pleased that repetitive disclosure checks happen before publication.", ["AI", "governance"], "joy", .87, "community", "US", "en", "human", "2026-08-29"],
+      ["e20", "I feel no single word fits this: useful, coercive, impressive and tiring.", ["AI", "work"], "unclassifiable", .31, "social", "UK", "en", "human", "2026-08-29"],
+      ["e21", "I feel hopeful about election verification teams sharing reusable checks.", ["AI", "election"], "hope", .82, "journalism", "EU", "en", "human", "2026-08-30"],
+      ["e22", "I feel angry when a correction is treated as failure but speed is rewarded.", ["AI", "work"], "anger", .91, "community", "UK", "en", "human", "2026-08-30"],
+      ["e23", "I feel sad that the local paper sounds less like the place it serves.", ["AI", "local news"], "sadness", .89, "social", "UK", "en", "human", "2026-08-30"],
+      ["e24", "I feel curious about what the climate model leaves unmentioned.", ["AI", "climate"], "confusion", .68, "journalism", "Global South", "en", "human", "2026-08-30"]
+    ].map(([id,text,topics,emotion,confidence,sourceClass,geography,language,authorship,date]) => ({
+      id, text, topics, emotion, confidence, sourceClass, geography, language, authorship, date,
+      provenance: { source: "Synthetic prototype corpus", sourceUrl: null, collectionDate: "2026-08-30", methodology: "Authored illustrative expression", lastVerified: "2026-08-30" }
+    })));
+
+    const QUESTIONS = deepFreeze([
+      { id: "capacity", label: "Who acquired new capacity?", explanation: "Follow changes in production, access, reach, knowledge and coordination." },
+      { id: "burden", label: "Who acquired the burden?", explanation: "Follow verification, exception work, moderation, correction and emotional labour." },
+      { id: "voice", label: "Whose voice became more or less visible?", explanation: "Examine source, language, geography, framing and representation." },
+      { id: "authority", label: "Where did judgement and authority move?", explanation: "Trace suggestion, decision, approval, publication, contest and accountability." },
+      { id: "commons", label: "What happened to the information commons?", explanation: "Compare production volume, originality, pollution, discoverability and filtering cost." },
+      { id: "learning", label: "What capabilities are being learned or lost?", explanation: "Inspect practice, fallback ability, novice development and expertise visibility." }
+    ]);
+
+    const EVIDENCE = deepFreeze({
+      capacity: [
+        ["Document retrieval widened the first-pass source set", "Observed in 8 of 12 synthetic workflow episodes; selection quality remained dependent on the archive.", "Moderate", "Workflow observation"],
+        ["Multilingual access increased, but local-language checking did too", "Translation drafts reduced initial access time while adding review by fluent colleagues.", "Low", "Diary + interview"],
+        ["Smaller organisations gained packaging capacity", "Caption, summary and format variants increased without equivalent audience-outcome evidence.", "Low", "Organisation report"]
+      ],
+      burden: [
+        ["Verification time exceeded drafting time saved", "Median direct saving: 12 minutes. Median checking, correction and coordination increase: 19 minutes.", "Moderate", "Workflow timing"],
+        ["Exception handling concentrated on senior staff", "Escalated cases moved upward while routine production moved toward junior workers and systems.", "Low", "Interview inference"],
+        ["Continuous monitoring reduced recovery time", "Workers described more prompts, alerts and expected outputs after deployment.", "Low", "Worker report"]
+      ],
+      voice: [
+        ["Source count rose while source independence fell", "More named sources appeared, but a larger share derived from the same institutional materials.", "Moderate", "Content analysis"],
+        ["Dominant-language material travelled further", "Translation improved access into English more often than visibility of local-language originals.", "Low", "Corpus comparison"],
+        ["Community accounts appeared more often in retrieval than in final framing", "Inclusion at discovery did not reliably survive selection and editing.", "Low", "Trace analysis"]
+      ],
+      authority: [
+        ["The interface's ranking became an informal assignment queue", "Workers retained formal authority but rarely reviewed items below the recommendation threshold.", "Moderate", "Screen observation"],
+        ["Accountability stayed human while control became distributed", "Bylines and legal responsibility remained human despite vendor and managerial influence over workflow.", "High", "Policy + workflow"],
+        ["Confidence language discouraged further search", "Scenario tests found earlier stopping when fluent answers carried numerical confidence.", "Low", "Controlled scenario"]
+      ],
+      commons: [
+        ["Synthetic output increased filtering demand", "Illustrative PR volume rose faster than newsroom review capacity.", "Low", "Cross-sector model"],
+        ["Correction visibility lagged initial circulation", "Revised claims reached fewer sampled surfaces than the originals.", "Moderate", "Trace comparison"],
+        ["Template reuse narrowed framing diversity", "Lexical variety remained high while causal and moral frames converged.", "Low", "Frame analysis"]
+      ],
+      learning: [
+        ["Novices practised genre before source judgement", "Surface production accelerated, leaving fewer visible opportunities to rehearse verification decisions.", "Low", "Training observation"],
+        ["Experts externalised tacit checks into reusable protocols", "Structured review prompts made some expert cues teachable without claiming to exhaust judgement.", "Moderate", "Protocol study"],
+        ["Manual fallback was rarely rehearsed", "Only two illustrative organisations tested workflow continuity without the AI service.", "Moderate", "Resilience review"]
+      ]
+    });
+
+    const WORKFLOWS = deepFreeze([
+      { id: "detect", label: "Detect", title: "Detect and notice", description: "AI can surface more possible signals, but ranking changes what becomes noticeable and what remains absent.", effect: "A wider intake can improve plurality—or turn one platform's visibility rules into the newsroom's agenda.", profile: [["Direct time effect", "Some time saved", "good"], ["Verification burden", "Low at this stage", "good"], ["Human judgement", "High: what matters", "caution"], ["Reversibility", "High before selection", "good"], ["Worker control", "Depends on ranking transparency", "caution"]] },
+      { id: "gather", label: "Gather", title: "Gather and verify", description: "AI broadens retrieval, while humans assess source authority, absence, contradiction and potential harm.", effect: "Faster retrieval can widen the evidence considered—or narrow attention to whatever the connector can see.", profile: [["Direct time effect", "12 minutes saved", "good"], ["Verification burden", "19 minutes added", "risk"], ["Human judgement", "Non-delegable", "caution"], ["Source traceability", "Partial", "risk"], ["Worker control", "Moderate", "caution"]] },
+      { id: "frame", label: "Frame", title: "Interpret and frame", description: "Models can propose patterns and counterframes, but public-interest judgement and meaningful absence remain human responsibilities.", effect: "Repeated prompts and model defaults may quietly narrow which causal stories seem natural.", profile: [["Direct time effect", "Uncertain", "caution"], ["Frame diversity", "Potentially narrower", "risk"], ["Human judgement", "Non-delegable", "caution"], ["Contestability", "Must be explicit", "caution"], ["Skill effect", "Unknown", "caution"]] },
+      { id: "make", label: "Make", title: "Draft and produce", description: "Generation often reduces first-draft time, while provenance, originality and verification determine whether the output is useful.", effect: "Production capacity can grow without a corresponding increase in knowledge, public value or distinct voice.", profile: [["Direct time effect", "Faster first pass", "good"], ["Rework", "Variable", "caution"], ["Originality", "At risk", "risk"], ["Authorship", "Must be disclosed", "caution"], ["Worker control", "High if refusal protected", "good"]] },
+      { id: "circulate", label: "Circulate", title: "Package and circulate", description: "Automation can adapt formats and timing, but reach optimisation redistributes attention and may amplify errors.", effect: "A small framing decision can become infrastructural when repeated across headlines, alerts, feeds and summaries.", profile: [["Volume", "Higher", "good"], ["Correction difficulty", "High", "risk"], ["Audience reach", "Potentially high", "caution"], ["Human approval", "Required for harm-sensitive output", "caution"], ["Accessibility", "Must be validated", "caution"]] },
+      { id: "respond", label: "Respond", title: "Receive, correct and contest", description: "Audience response, correction and appeal reveal effects that production metrics cannot see.", effect: "A system is accountable only if affected people can recognise a claim, challenge it and see what changed.", profile: [["Correction lag", "Variable", "caution"], ["Appeal route", "Required", "good"], ["Emotional labour", "Often hidden", "risk"], ["Learning feedback", "Potentially strong", "good"], ["Public accountability", "Human and institutional", "caution"]] }
+    ]);
+
+    const PROTOCOLS = deepFreeze({
+      rest: `POST /v1/query\nContent-Type: application/json\n\n{\n  "scope": { "topics": ["AI", "local news"] },\n  "filters": [{ "field": "geography", "op": "eq", "value": "UK" }],\n  "groupBy": ["emotion", "day"],\n  "measures": ["expressionCount"],\n  "page": { "limit": 50, "cursor": null }\n}\n\n200 → CanonicalResponseEnvelope`,
+      graphql: `query Observatory($query: ObservatoryQuery!) {\n  observatory(query: $query) {\n    data { groups { key count } }\n    provenance { source collectionDate methodology lastVerified }\n    uncertainty { kind lower upper explanation }\n    warnings { code message severity }\n    page { nextCursor }\n  }\n}`,
+      grpc: `service Observatory {\n  rpc Query(QueryRequest) returns (QueryResponse);\n}\n\nmessage QueryRequest {\n  Scope scope = 1;\n  repeated Filter filters = 2;\n  repeated string group_by = 3;\n  repeated Measure measures = 4;\n  PageRequest page = 5;\n}\n\n// QueryResponse projects CanonicalResponseEnvelope.\n// Protobuf field numbers are append-only once published.`
+    });
+
+    const ROUTES = deepFreeze(["briefing", "pulse", "explore", "work", "methods", "system"]);
+    const FILTER_DEFAULTS = deepFreeze({ period: "7d", source: "all", emotion: "all", geo: "all", language: "all", authorship: "all", confidence: "all" });
+    const PREF_DEFAULTS = deepFreeze({ theme: "system", density: "comfortable", text: "normal", motion: "system", adaptive: false, visits: {} });
+    const PREF_DOMAINS = deepFreeze({ theme: ["system", "light", "dark"], density: ["comfortable", "compact"], text: ["normal", "large"], motion: ["system", "off"], adaptive: [true, false] });
+    const MIN_AGGREGATE = 3;
+
+    const Storage = Object.freeze({
+      key: "common-signal.preferences.v1",
+      load() {
+        try {
+          const value = JSON.parse(localStorage.getItem(this.key) || "null");
+          if (!value || typeof value !== "object") return { ...PREF_DEFAULTS, visits: {} };
+          return {
+            theme: ["system", "light", "dark"].includes(value.theme) ? value.theme : "system",
+            density: ["comfortable", "compact"].includes(value.density) ? value.density : "comfortable",
+            text: ["normal", "large"].includes(value.text) ? value.text : "normal",
+            motion: ["system", "off"].includes(value.motion) ? value.motion : "system",
+            adaptive: value.adaptive === true,
+            visits: value.visits && typeof value.visits === "object" ? value.visits : {}
+          };
+        } catch { return { ...PREF_DEFAULTS, visits: {} }; }
+      },
+      save(preferences) { try { localStorage.setItem(this.key, JSON.stringify(preferences)); return true; } catch { return false; } },
+      clear() { try { localStorage.removeItem(this.key); return true; } catch { return false; } }
+    });
+
+    const parseHash = () => {
+      const raw = location.hash.replace(/^#/, "");
+      const [candidate, query = ""] = raw.split("?");
+      const route = ROUTES.includes(candidate) ? candidate : "briefing";
+      const params = new URLSearchParams(query);
+      const filters = { ...FILTER_DEFAULTS };
+      Object.keys(filters).forEach((key) => { if (params.has(key)) filters[key] = params.get(key); });
+      return { route, query: params.get("q") || "AI", filters };
+    };
+
+    const prefs = Storage.load();
+    const hashState = parseHash();
+    let state = deepFreeze({
+      route: hashState.route,
+      pulseQuery: hashState.query,
+      filters: hashState.filters,
+      pulseView: "field",
+      pulseMotion: prefs.motion !== "off",
+      selectedExpression: null,
+      question: "capacity",
+      workflow: "gather",
+      protocol: "rest",
+      registry: "pipelines",
+      preferences: prefs,
+      diagnostics: [],
+      lastRenderMs: 0
+    });
+    let lastKnownGood = state;
+    const eventLog = [];
+
+    const ACTIONS = deepFreeze({
+      NAVIGATE: ["route"], SET_QUERY: ["query"], SET_FILTER: ["key", "value"], RESET_FILTERS: [],
+      SET_PULSE_VIEW: ["view"], TOGGLE_PULSE_MOTION: [], SELECT_EXPRESSION: ["id"],
+      SET_QUESTION: ["id"], SET_WORKFLOW: ["id"], SET_PROTOCOL: ["id"], SET_REGISTRY: ["id"],
+      SET_PREFERENCE: ["key", "value"], SET_DIAGNOSTICS: ["results", "duration"]
+    });
+
+    const reducer = (current, action) => {
+      if (!Object.hasOwn(ACTIONS, action.type)) throw new Error(`Unknown action: ${String(action.type)}`);
+      for (const field of ACTIONS[action.type]) if (!Object.hasOwn(action, field)) throw new Error(`Action ${action.type} lacks ${field}`);
+      switch (action.type) {
+        case "NAVIGATE": return ROUTES.includes(action.route) ? { ...current, route: action.route, selectedExpression: action.route === "pulse" ? current.selectedExpression : null } : current;
+        case "SET_QUERY": return { ...current, pulseQuery: String(action.query).slice(0, 80), selectedExpression: null };
+        case "SET_FILTER": return Object.hasOwn(FILTER_DEFAULTS, action.key) ? { ...current, filters: { ...current.filters, [action.key]: String(action.value) }, selectedExpression: null } : current;
+        case "RESET_FILTERS": return { ...current, filters: { ...FILTER_DEFAULTS }, selectedExpression: null };
+        case "SET_PULSE_VIEW": return ["field", "list"].includes(action.view) ? { ...current, pulseView: action.view } : current;
+        case "TOGGLE_PULSE_MOTION": return { ...current, pulseMotion: !current.pulseMotion };
+        case "SELECT_EXPRESSION": return { ...current, selectedExpression: action.id };
+        case "SET_QUESTION": return QUESTIONS.some((q) => q.id === action.id) ? { ...current, question: action.id } : current;
+        case "SET_WORKFLOW": return WORKFLOWS.some((w) => w.id === action.id) ? { ...current, workflow: action.id } : current;
+        case "SET_PROTOCOL": return Object.hasOwn(PROTOCOLS, action.id) ? { ...current, protocol: action.id } : current;
+        case "SET_REGISTRY": return Object.hasOwn(SYSTEM_SPEC, action.id) ? { ...current, registry: action.id } : current;
+        case "SET_PREFERENCE": {
+          if (!Object.hasOwn(PREF_DOMAINS, action.key) || !PREF_DOMAINS[action.key].includes(action.value)) throw new Error(`Invalid preference: ${String(action.key)}`);
+          const nextPrefs = { ...current.preferences, [action.key]: action.value };
+          return { ...current, preferences: nextPrefs, pulseMotion: action.key === "motion" ? action.value !== "off" : current.pulseMotion };
+        }
+        case "SET_DIAGNOSTICS": return { ...current, diagnostics: action.results, lastRenderMs: action.duration };
+        default: return current;
+      }
+    };
+
+    const toast = (message) => {
+      const node = document.getElementById("toast");
+      node.textContent = message;
+      node.hidden = false;
+      clearTimeout(toast.timer);
+      toast.timer = setTimeout(() => { node.hidden = true; }, 4200);
+    };
+
+    const recordVisit = (route) => {
+      if (!state.preferences.adaptive) return;
+      const visits = { ...state.preferences.visits, [route]: (state.preferences.visits[route] || 0) + 1 };
+      state = deepFreeze({ ...state, preferences: { ...state.preferences, visits } });
+      Storage.save(state.preferences);
+    };
+
+    const dispatch = (action, options = {}) => {
+      const before = state;
+      try {
+        const next = reducer(state, action);
+        state = deepFreeze(next);
+        eventLog.push({ sequence: eventLog.length + 1, type: action.type, at: new Date().toISOString() });
+        if (eventLog.length > 100) eventLog.shift();
+        if (action.type === "NAVIGATE" && before.route !== state.route) recordVisit(state.route);
+        safeRender();
+        lastKnownGood = state;
+        if (!options.silent && action.type === "NAVIGATE") document.getElementById("main").focus({ preventScroll: true });
+      } catch (error) {
+        state = lastKnownGood;
+        showRecovery(`A state transition was rejected and the last known good view was restored. ${error.message}`);
+      }
+    };
+
+    const showRecovery = (message) => {
+      const banner = document.getElementById("recovery-banner");
+      banner.textContent = message;
+      banner.hidden = false;
+      document.getElementById("footer-status").textContent = "Recovered from a rejected transition · inspect diagnostics";
+    };
+
+    const text = (tag, content, className = "") => {
+      const node = document.createElement(tag);
+      node.textContent = content;
+      if (className) node.className = className;
+      return node;
+    };
+
+    const emotionLabel = (value) => ({ hope: "Hope", concern: "Concern", anger: "Anger", joy: "Joy", sadness: "Sadness", confusion: "Confusion", mixed: "Mixed", unclassifiable: "Unclassifiable" }[value] || value);
+    const sourceLabel = (value) => ({ social: "Social expression", journalism: "Journalism", community: "Community / civic", search: "Search interest" }[value] || value);
+    const confidenceBand = (value) => value >= .85 ? "High" : value >= .65 ? "Medium" : "Low";
+
+    const OPERATIONS = Object.freeze({
+      validateQuery(records, context) {
+        const filters = context.filters;
+        if (!filters || Object.keys(filters).some((key) => !Object.hasOwn(FILTER_DEFAULTS, key))) throw new Error("Invalid filter domain");
+        return records;
+      },
+      selectExpressions(records) { return records.slice(); },
+      applyFilters(records, context) {
+        const q = context.query.trim().toLocaleLowerCase();
+        return records.filter((record) => {
+          const searchable = `${record.text} ${record.topics.join(" ")}`.toLocaleLowerCase();
+          if (q && !searchable.includes(q.replace(/^#/, ""))) return false;
+          if (context.filters.source !== "all" && record.sourceClass !== context.filters.source) return false;
+          if (context.filters.emotion !== "all" && record.emotion !== context.filters.emotion) return false;
+          if (context.filters.geo !== "all" && record.geography !== context.filters.geo) return false;
+          if (context.filters.language !== "all" && record.language !== context.filters.language) return false;
+          if (context.filters.authorship !== "all" && record.authorship !== context.filters.authorship) return false;
+          if (context.filters.confidence === "high" && record.confidence < .85) return false;
+          if (context.filters.confidence === "medium" && record.confidence < .65) return false;
+          if (context.filters.period === "24h" && record.date !== "2026-08-30") return false;
+          return true;
+        });
+      },
+      privacyGate(records) { return records.length > 0 && records.length < MIN_AGGREGATE ? [] : records; },
+      aggregate(records) { return records; },
+      attachProvenance(records) { return records; }
+    });
+
+    const runPipeline = (name, input, context) => {
+      const pipeline = SYSTEM_SPEC.pipelines[name];
+      if (!pipeline) throw new Error(`Unknown pipeline: ${name}`);
+      return pipeline.reduce((value, stage) => {
+        const operation = OPERATIONS[stage.op];
+        if (typeof operation !== "function") throw new Error(`Unresolved operation: ${stage.op}`);
+        return operation(value, context);
+      }, input);
+    };
+
+    const currentExpressions = () => runPipeline("pulse", EXPRESSIONS, { query: state.pulseQuery, filters: state.filters });
+
+    const renderRoute = () => {
+      document.querySelectorAll("[data-page]").forEach((page) => { page.hidden = page.dataset.page !== state.route; });
+      document.querySelectorAll("[data-route]").forEach((link) => {
+        if (link.classList.contains("nav-link")) link.setAttribute("aria-current", link.dataset.route === state.route ? "page" : "false");
+      });
+      const expectedHash = `#${state.route}`;
+      if (state.route !== "pulse" && location.hash !== expectedHash) history.replaceState(null, "", expectedHash);
+      document.title = `${document.querySelector(`[data-page="${state.route}"] .eyebrow`)?.textContent || "Common Signal"} — Common Signal`;
+    };
+
+    const renderPreferences = () => {
+      const p = state.preferences;
+      document.documentElement.dataset.theme = p.theme;
+      document.documentElement.dataset.density = p.density;
+      document.documentElement.dataset.text = p.text;
+      document.documentElement.dataset.motion = p.motion;
+      document.querySelectorAll("[data-setting]").forEach((button) => button.setAttribute("aria-pressed", String(p[button.dataset.setting] === button.dataset.value)));
+      document.getElementById("adaptive-setting").checked = p.adaptive;
+      const shortcut = document.getElementById("adaptive-shortcut");
+      const favorite = Object.entries(p.visits).filter(([route]) => route !== state.route && ROUTES.includes(route)).sort((a,b) => b[1] - a[1])[0];
+      shortcut.hidden = !(p.adaptive && favorite && favorite[1] >= 2);
+      if (!shortcut.hidden) {
+        shortcut.dataset.routeButton = favorite[0];
+        shortcut.textContent = `Your shortcut: ${favorite[0][0].toUpperCase()}${favorite[0].slice(1)}`;
+      }
+    };
+
+    const renderAppliedFilters = () => {
+      const host = document.getElementById("applied-filters");
+      host.replaceChildren(text("span", `Query: ${state.pulseQuery || "all expressions"}`, "chip"));
+      Object.entries(state.filters).filter(([,value]) => value !== "all" && value !== "7d").forEach(([key,value]) => host.append(text("span", `${key}: ${value}`, "chip")));
+      const reset = document.createElement("button");
+      reset.type = "button";
+      reset.className = "chip-button";
+      reset.dataset.resetFilters = "true";
+      reset.textContent = "Reset filters";
+      host.append(reset);
+    };
+
+    const renderSelectedExpression = (records) => {
+      const selected = records.find((record) => record.id === state.selectedExpression) || records[0] || null;
+      const quote = document.getElementById("selected-expression");
+      const meta = document.getElementById("selected-meta");
+      meta.replaceChildren();
+      if (!selected) {
+        quote.textContent = "No aggregate is shown because fewer than three expressions match. Broaden the query or filters.";
+        return;
+      }
+      quote.textContent = `“${selected.text}”`;
+      [["Classification", emotionLabel(selected.emotion)], ["Confidence", `${confidenceBand(selected.confidence)} · ${Math.round(selected.confidence * 100)}%`], ["Source class", sourceLabel(selected.sourceClass)], ["Geography", selected.geography], ["Language", selected.language], ["Authorship", selected.authorship]].forEach(([label,value]) => {
+        const wrapper = document.createElement("div");
+        wrapper.append(text("dt", label), text("dd", value));
+        meta.append(wrapper);
+      });
+    };
+
+    const renderPulseField = (records) => {
+      const host = document.getElementById("pulse-field");
+      host.classList.toggle("paused", !state.pulseMotion);
+      host.replaceChildren();
+      records.slice(0, 24).forEach((record, index) => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = `orb ${record.emotion} pos-${index} delay-${index % 4} ${index % 5 === 0 ? "size-l" : index % 3 === 0 ? "size-s" : ""}${record.id === state.selectedExpression ? " selected" : ""}`;
+        button.dataset.expressionId = record.id;
+        button.setAttribute("aria-label", `${emotionLabel(record.emotion)} expression: ${record.text}`);
+        button.setAttribute("aria-pressed", String(record.id === state.selectedExpression));
+        button.textContent = emotionLabel(record.emotion);
+        host.append(button);
+      });
+      if (!records.length) host.append(text("p", "No publishable aggregate matches. The privacy threshold suppresses groups smaller than three.", "notice"));
+    };
+
+    const renderPulseTable = (records) => {
+      const body = document.getElementById("pulse-table-body");
+      body.replaceChildren();
+      records.forEach((record) => {
+        const row = document.createElement("tr");
+        [record.text, emotionLabel(record.emotion), sourceLabel(record.sourceClass), record.geography, `${confidenceBand(record.confidence)} (${Math.round(record.confidence * 100)}%)`].forEach((value) => row.append(text("td", value)));
+        body.append(row);
+      });
+      document.getElementById("pulse-table-caption").textContent = `${records.length} synthetic expressions matching “${state.pulseQuery || "all"}”. Groups below ${MIN_AGGREGATE} are suppressed.`;
+    };
+
+    const renderTrend = (records) => {
+      const days = ["2026-08-24","2026-08-25","2026-08-26","2026-08-27","2026-08-28","2026-08-29","2026-08-30"];
+      const counts = days.map((day) => records.filter((record) => record.date === day).length);
+      const max = Math.max(1, ...counts);
+      const points = counts.map((count,index) => [8 + index * (304 / 6), 78 - (count / max) * 62]);
+      const path = points.map(([x,y],index) => `${index ? "L" : "M"}${x.toFixed(1)},${y.toFixed(1)}`).join(" ");
+      document.getElementById("trend-path").setAttribute("d", path);
+      const first = counts.find((value) => value > 0) || 0;
+      const last = counts[counts.length - 1];
+      const direction = last > first ? "rose" : last < first ? "fell" : "was broadly level";
+      document.getElementById("trend-summary").textContent = records.length ? `Within this synthetic sample, matching expression volume ${direction} across the visible period. Counts: ${counts.join(", ")}.` : "No trend is calculated for a suppressed or empty result.";
+    };
+
+    const renderDistribution = (records) => {
+      const host = document.getElementById("emotion-distribution");
+      host.replaceChildren();
+      const emotions = ["hope", "concern", "anger", "joy", "sadness", "confusion", "mixed", "unclassifiable"];
+      const counts = emotions.map((emotion) => [emotion, records.filter((record) => record.emotion === emotion).length]).filter(([,count]) => count > 0);
+      const max = Math.max(1, ...counts.map(([,count]) => count));
+      counts.forEach(([emotion,count]) => {
+        const row = document.createElement("div"); row.className = "bar-row";
+        const track = document.createElement("div"); track.className = "bar-track";
+        const fill = document.createElement("div"); fill.className = `bar-fill w-${Math.max(1, Math.round(count / max * 10))}`;
+        track.append(fill);
+        row.append(text("span", emotionLabel(emotion)), track, text("span", String(count)));
+        host.append(row);
+      });
+      if (!counts.length) host.append(text("p", "No classifications displayed.", "fine-print"));
+    };
+
+    const renderPulse = () => {
+      const records = currentExpressions();
+      document.getElementById("pulse-query").value = state.pulseQuery;
+      Object.entries(state.filters).forEach(([key,value]) => { const control = document.getElementById(`filter-${key}`); if (control) control.value = value; });
+      document.getElementById("pulse-count").textContent = records.length ? `${records.length} sampled expressions` : "Aggregate suppressed or empty";
+      document.getElementById("motion-toggle").textContent = state.pulseMotion ? "Pause movement" : "Resume movement";
+      document.getElementById("motion-toggle").setAttribute("aria-pressed", String(state.pulseMotion));
+      document.getElementById("pulse-view-field").setAttribute("aria-pressed", String(state.pulseView === "field"));
+      document.getElementById("pulse-view-list").setAttribute("aria-pressed", String(state.pulseView === "list"));
+      document.getElementById("pulse-field").hidden = state.pulseView !== "field";
+      document.getElementById("pulse-table-wrap").hidden = state.pulseView !== "list";
+      renderAppliedFilters();
+      renderPulseField(records);
+      renderPulseTable(records);
+      renderSelectedExpression(records);
+      renderTrend(records);
+      renderDistribution(records);
+    };
+
+    const renderExplore = () => {
+      const questionHost = document.getElementById("question-grid");
+      questionHost.replaceChildren();
+      QUESTIONS.forEach((question) => {
+        const button = document.createElement("button");
+        button.type = "button"; button.className = "question-option"; button.dataset.questionId = question.id;
+        button.setAttribute("aria-pressed", String(question.id === state.question));
+        button.append(text("span", "Public question"), text("strong", question.label));
+        questionHost.append(button);
+      });
+      const current = QUESTIONS.find((question) => question.id === state.question);
+      document.getElementById("explore-question-title").textContent = current.label;
+      document.getElementById("explore-question-explanation").textContent = current.explanation;
+      const grid = document.getElementById("evidence-grid");
+      grid.replaceChildren();
+      EVIDENCE[state.question].forEach(([titleValue,detail,confidence,method]) => {
+        const article = document.createElement("article"); article.className = "evidence-card";
+        article.append(text("p", method, "eyebrow"), text("h3", titleValue), text("p", detail));
+        const footer = document.createElement("div"); footer.className = "card-footer";
+        footer.append(text("span", `${confidence} evidence`, `confidence ${confidence.toLowerCase()}`), text("span", "Synthetic", "chip"));
+        article.append(footer); grid.append(article);
+      });
+    };
+
+    const renderWork = () => {
+      const host = document.getElementById("workflow"); host.replaceChildren();
+      WORKFLOWS.forEach((workflow) => {
+        const button = document.createElement("button"); button.type = "button"; button.dataset.workflowId = workflow.id;
+        button.setAttribute("aria-pressed", String(workflow.id === state.workflow)); button.textContent = workflow.label; host.append(button);
+      });
+      const current = WORKFLOWS.find((workflow) => workflow.id === state.workflow);
+      document.getElementById("workflow-title").textContent = current.title;
+      document.getElementById("workflow-description").textContent = current.description;
+      document.getElementById("linked-effect").textContent = current.effect;
+      const profile = document.getElementById("work-profile"); profile.replaceChildren();
+      current.profile.forEach(([label,value,status]) => { const row = document.createElement("div"); row.className = "profile-row"; row.append(text("span", label), text("span", value, `profile-value ${status}`)); profile.append(row); });
+    };
+
+    const renderSystem = () => {
+      const health = document.getElementById("health-grid"); health.replaceChildren();
+      [["Runtime", "Operational", "Local reducer and render boundary"], ["Data", "Synthetic", `${EXPRESSIONS.length} validated fixtures`], ["Network", "Disabled", "CSP connect-src none"], ["Assurance", "Prototype", "Later proofs not claimed"]].forEach(([label,status,detail],index) => {
+        const item = document.createElement("article"); item.className = "health-item";
+        item.append(text("span", status, `health-status ${index === 3 ? "warn" : ""}`), text("h3", label), text("p", detail, "fine-print")); health.append(item);
+      });
+      const registry = document.getElementById("registry-list"); registry.replaceChildren();
+      ["entities", "pipelines", "capabilities", "adapters", "sourceConnectors", "security", "schemas", "assurance"].forEach((id) => {
+        const button = document.createElement("button"); button.type = "button"; button.dataset.registryId = id; button.setAttribute("aria-pressed", String(state.registry === id)); button.textContent = `${id[0].toUpperCase()}${id.slice(1)}`; registry.append(button);
+      });
+      document.getElementById("registry-inspector").textContent = JSON.stringify(SYSTEM_SPEC[state.registry], null, 2);
+      document.querySelectorAll("[data-protocol]").forEach((button) => {
+        const selected = button.dataset.protocol === state.protocol;
+        button.setAttribute("aria-selected", String(selected));
+        button.tabIndex = selected ? 0 : -1;
+      });
+      document.getElementById("protocol-code").setAttribute("aria-labelledby", `tab-${state.protocol}`);
+      document.getElementById("protocol-code").textContent = PROTOCOLS[state.protocol];
+      const ladder = document.getElementById("proof-ladder"); ladder.replaceChildren();
+      SYSTEM_SPEC.assurance.forEach((level) => {
+        const item = document.createElement("li"); const body = document.createElement("div");
+        body.append(text("strong", level.level), text("span", level.state === "demonstrated" ? "Prototype checks present" : "Not proved", "not-proved"), text("p", level.claims.join(" · "), "fine-print")); item.append(body); ladder.append(item);
+      });
+      const diagnostics = document.getElementById("diagnostic-results"); diagnostics.replaceChildren();
+      state.diagnostics.forEach((result) => { const item = document.createElement("li"); item.append(text("strong", result.status, result.status === "PASS" ? "" : result.status.toLowerCase()), text("span", result.message)); diagnostics.append(item); });
+    };
+
+    const safeRender = () => {
+      const start = performance.now();
+      try {
+        renderRoute(); renderPreferences(); renderPulse(); renderExplore(); renderWork(); renderSystem();
+        document.getElementById("footer-status").textContent = `Ready · offline · ${eventLog.length} local events · ${Math.round(performance.now() - start)}ms render`;
+      } catch (error) {
+        state = lastKnownGood;
+        showRecovery(`Rendering failed safely. The prior state was retained. ${error.message}`);
+        throw error;
+      }
+    };
+
+    const updateShareHash = () => {
+      const params = new URLSearchParams();
+      if (state.pulseQuery) params.set("q", state.pulseQuery);
+      Object.entries(state.filters).forEach(([key,value]) => { if (value !== FILTER_DEFAULTS[key]) params.set(key, value); });
+      const value = `#pulse?${params.toString()}`;
+      history.replaceState(null, "", value);
+      return `${location.href.split("#")[0]}${value}`;
+    };
+
+    const download = (filename, content, type) => {
+      const blob = new Blob([content], { type });
+      const url = URL.createObjectURL(blob);
+      const anchor = document.createElement("a"); anchor.href = url; anchor.download = filename; document.body.append(anchor); anchor.click(); anchor.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 0);
+    };
+
+    const exportCurrentView = () => {
+      const envelope = {
+        schemaVersion: "1.0.0-prototype",
+        generatedAt: new Date().toISOString(),
+        query: { text: state.pulseQuery, filters: state.filters },
+        data: currentExpressions(),
+        provenance: { source: "Synthetic prototype corpus", collectionDate: "2026-08-30", methodology: "Illustrative authored expressions", lastVerified: "2026-08-30" },
+        uncertainty: { kind: "not-estimable", explanation: "Synthetic convenience sample; no population inference." },
+        warnings: ["Synthetic data", `Groups below ${MIN_AGGREGATE} suppressed`, "Emotion labels are model-like illustrative classifications"]
+      };
+      download("common-signal-pulse-view.json", JSON.stringify(envelope, null, 2), "application/json");
+      toast("Current view exported with provenance and warnings.");
+    };
+
+    const runDiagnostics = () => {
+      const started = performance.now();
+      const results = [];
+      const check = (condition, pass, fail) => results.push({ status: condition ? "PASS" : "FAIL", message: condition ? pass : fail });
+      const ids = [...document.querySelectorAll("[id]")].map((node) => node.id);
+      check(new Set(ids).size === ids.length, "DOM identifiers are unique.", "Duplicate DOM identifiers detected.");
+      check(document.querySelector("main") && document.querySelector("nav[aria-label]") && document.querySelector("a.skip-link"), "Landmarks and skip navigation are present.", "A required landmark or skip link is missing.");
+      check([...document.querySelectorAll("button")].every((button) => (button.textContent || button.getAttribute("aria-label") || "").trim()), "All buttons have accessible names.", "An unnamed button exists.");
+      check(EXPRESSIONS.every((record) => SYSTEM_SPEC.schemas.expressionRecord.required.every((field) => Object.hasOwn(record, field))), "All expression fixtures satisfy required schema fields.", "A fixture lacks required schema fields.");
+      check(SYSTEM_SPEC.pipelines.pulse.every((stage) => typeof OPERATIONS[stage.op] === "function"), "Every declared pipeline operation resolves to a trusted implementation.", "A declared operation is unresolved.");
+      check(!document.querySelector("[onclick],[onchange],[oninput],[onerror]"), "No inline event-handler attributes are present.", "Unsafe inline event-handler attributes were detected.");
+      check([...document.scripts].every((script) => !script.src), "No external or dynamically sourced scripts are present.", "An externally sourced script was detected.");
+      check(document.querySelector('meta[http-equiv="Content-Security-Policy"]')?.content.includes("connect-src 'none'"), "Prototype network access is denied by CSP.", "CSP does not deny network access.");
+      const prior = state;
+      let recovered = false;
+      try { reducer(state, { type: "INVALID_DIAGNOSTIC_ACTION" }); } catch { recovered = state === prior; }
+      check(recovered, "Invalid transitions are rejected without changing state.", "Recovery invariant failed.");
+      const duration = performance.now() - started;
+      results.push({ status: duration < 50 ? "PASS" : "WARN", message: `Diagnostic suite completed in ${duration.toFixed(1)}ms; target is under 50ms on this device.` });
+      dispatch({ type: "SET_DIAGNOSTICS", results, duration }, { silent: true });
+      toast(results.every((result) => result.status !== "FAIL") ? "Self-diagnostics completed without failures." : "Diagnostics found a failure. Inspect the results.");
+    };
+
+    let queryTimer = 0;
+    document.addEventListener("click", async (event) => {
+      const target = event.target.closest("button, a"); if (!target) return;
+      const route = target.dataset.route || target.dataset.routeButton;
+      if (route) { event.preventDefault(); history.pushState(null, "", `#${route}`); dispatch({ type: "NAVIGATE", route }); return; }
+      if (target.dataset.scrollTo) { document.getElementById(target.dataset.scrollTo)?.scrollIntoView(); return; }
+      if (target.dataset.resetFilters) { dispatch({ type: "RESET_FILTERS" }); return; }
+      if (target.dataset.expressionId) { dispatch({ type: "SELECT_EXPRESSION", id: target.dataset.expressionId }); return; }
+      if (target.dataset.questionId) { dispatch({ type: "SET_QUESTION", id: target.dataset.questionId }); return; }
+      if (target.dataset.workflowId) { dispatch({ type: "SET_WORKFLOW", id: target.dataset.workflowId }); return; }
+      if (target.dataset.protocol) { dispatch({ type: "SET_PROTOCOL", id: target.dataset.protocol }); return; }
+      if (target.dataset.registryId) { dispatch({ type: "SET_REGISTRY", id: target.dataset.registryId }); return; }
+      if (target.dataset.setting) { dispatch({ type: "SET_PREFERENCE", key: target.dataset.setting, value: target.dataset.value }, { silent: true }); Storage.save(state.preferences); return; }
+      if (target.dataset.closeDialog) { document.getElementById(target.dataset.closeDialog).close(); return; }
+      if (target.id === "settings-open") { document.getElementById("settings-dialog").showModal(); return; }
+      if (target.id === "help-open") { document.getElementById("help-dialog").showModal(); return; }
+      if (target.id === "motion-toggle") { dispatch({ type: "TOGGLE_PULSE_MOTION" }); return; }
+      if (target.id === "pulse-view-field") { dispatch({ type: "SET_PULSE_VIEW", view: "field" }); return; }
+      if (target.id === "pulse-view-list") { dispatch({ type: "SET_PULSE_VIEW", view: "list" }); return; }
+      if (target.id === "export-view") { exportCurrentView(); return; }
+      if (target.id === "share-view") {
+        const link = updateShareHash();
+        try { await navigator.clipboard.writeText(link); toast("View link copied. It contains filters, not personal data."); }
+        catch { toast("The view URL is now in the address bar; copy it from there."); }
+        return;
+      }
+      if (target.id === "challenge-demo") { toast("Challenge record preview: status open · scope methodology · submitted anonymously · response due before republication."); return; }
+      if (target.id === "run-diagnostics") { runDiagnostics(); return; }
+      if (target.id === "export-spec") { download("common-signal-system-spec.json", JSON.stringify(SYSTEM_SPEC, null, 2), "application/json"); toast("Inspectable specification exported."); return; }
+      if (target.id === "clear-local") {
+        Storage.clear();
+        state = deepFreeze({ ...state, preferences: { ...PREF_DEFAULTS, visits: {} } });
+        safeRender(); toast("Local preferences cleared."); return;
+      }
+    });
+
+    document.addEventListener("change", (event) => {
+      const target = event.target;
+      if (target.id?.startsWith("filter-")) dispatch({ type: "SET_FILTER", key: target.id.replace("filter-", ""), value: target.value });
+      if (target.id === "adaptive-setting") { dispatch({ type: "SET_PREFERENCE", key: "adaptive", value: target.checked }, { silent: true }); Storage.save(state.preferences); toast(target.checked ? "Local shortcut learning enabled. Searches are never stored." : "Local shortcut learning disabled."); }
+    });
+
+    document.getElementById("pulse-query").addEventListener("input", (event) => {
+      clearTimeout(queryTimer);
+      const value = event.target.value;
+      queryTimer = setTimeout(() => dispatch({ type: "SET_QUERY", query: value }, { silent: true }), 180);
+    });
+
+    document.getElementById("pulse-field").addEventListener("keydown", (event) => {
+      const orbs = [...document.querySelectorAll("#pulse-field .orb")];
+      const index = orbs.indexOf(document.activeElement);
+      if (index < 0) return;
+      if (["ArrowRight", "ArrowDown", "ArrowLeft", "ArrowUp"].includes(event.key)) {
+        event.preventDefault();
+        const direction = ["ArrowRight", "ArrowDown"].includes(event.key) ? 1 : -1;
+        orbs[(index + direction + orbs.length) % orbs.length]?.focus();
+      }
+    });
+
+    document.getElementById("protocol-tabs").addEventListener("keydown", (event) => {
+      if (!["ArrowRight", "ArrowLeft", "Home", "End"].includes(event.key)) return;
+      event.preventDefault();
+      const tabs = [...document.querySelectorAll("[data-protocol]")];
+      const index = tabs.indexOf(document.activeElement);
+      const next = event.key === "Home" ? 0 : event.key === "End" ? tabs.length - 1 : (index + (event.key === "ArrowRight" ? 1 : -1) + tabs.length) % tabs.length;
+      tabs[next].focus();
+      dispatch({ type: "SET_PROTOCOL", id: tabs[next].dataset.protocol }, { silent: true });
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.target.matches("input, select, textarea") || event.ctrlKey || event.metaKey || event.altKey) return;
+      if (event.key === "?") { event.preventDefault(); document.getElementById("help-dialog").showModal(); }
+      if (event.key === "/") { event.preventDefault(); history.pushState(null, "", "#pulse"); dispatch({ type: "NAVIGATE", route: "pulse" }); document.getElementById("pulse-query").focus(); }
+      if (/^[1-6]$/.test(event.key)) { const route = ROUTES[Number(event.key) - 1]; history.pushState(null, "", `#${route}`); dispatch({ type: "NAVIGATE", route }); }
+      if (event.key === "Escape" && state.selectedExpression) dispatch({ type: "SELECT_EXPRESSION", id: null }, { silent: true });
+    });
+
+    window.addEventListener("hashchange", () => {
+      const parsed = parseHash();
+      state = deepFreeze({ ...state, route: parsed.route, pulseQuery: parsed.query, filters: parsed.filters });
+      safeRender();
+    });
+
+    window.addEventListener("error", (event) => showRecovery(`A runtime error was contained: ${event.message}`));
+    window.addEventListener("unhandledrejection", () => showRecovery("An asynchronous error was contained. No data left this page."));
+
+    safeRender();
+    if ("requestIdleCallback" in window) requestIdleCallback(runDiagnostics, { timeout: 1200 }); else setTimeout(runDiagnostics, 300);
+  </script>
+</body>
+</html>

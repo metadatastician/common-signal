@@ -1,0 +1,271 @@
+// SPDX-License-Identifier: CC-BY-SA-4.0
+// SPDX-FileCopyrightText: 2026 Jonathan D.A. Jewell
+= Common Signal: evidence discovery to intelligence for action
+:toc:
+
+== Status
+
+This is the design and admission contract for the wider observatory. Source
+candidates have been identified, but no live connector or field-submission
+channel is implemented or authorised. The current service remains synthetic and
+read-only. `sources/registry.json` is an inventory, not evidence that a source
+has been collected.
+
+== Intended outcome
+
+Common Signal should help affected workers, workplace and union representatives,
+journalists, researchers, and public-interest organisations turn scattered
+material into evidence they can inspect and use to:
+
+* investigate a technology, employer claim, market development, or policy change;
+* prepare questions for information and consultation;
+* support collective negotiation without exposing membership or strategy;
+* challenge unsafe monitoring, workload intensification, deskilling, or rights
+  infringement;
+* report accurately on structural changes in journalism, PR, communications,
+  and the media industries;
+* identify what is still unknown and what evidence would change a conclusion.
+
+“Intelligence” here means a versioned, source-linked, contestable action brief.
+It is not secret intelligence about workers, a prediction about individuals, or
+an automated instruction.
+
+== Surveillance and reconnaissance boundary
+
+The word _surveillance_ is too dangerous to leave unqualified.
+
+Common Signal may implement transparent *source and system watches* for:
+
+* source availability, update times, API health, and schema drift;
+* newly published official statistics, regulator guidance, union policy, public
+  company filings, and public consultations;
+* coverage gaps and changes in the set of published media sources indexed;
+* public claims made by employers, vendors, publishers, platforms, regulators,
+  and governments;
+* worker-led documentation of workplace surveillance systems, when voluntarily
+  submitted through a protected and collectively governed route.
+
+It may perform *reconnaissance* to learn which lawful public sources exist, what
+their coverage is, whether their licence permits the proposed processing, and
+which questions they can and cannot answer.
+
+It must not conduct or facilitate:
+
+* covert or identifiable monitoring of workers, freelances, representatives, or
+  sources;
+* inference of union membership, organising, chapel activity, industrial-action
+  preparation, or workforce/union sentiment;
+* individual output, refusal, availability, correction, byline, engagement, or
+  client-feedback scoring;
+* deanonymisation of protected or confidential sources;
+* automated decisions about discipline, dismissal, redundancy, work allocation,
+  commissioning, editorial approval, or professional standing.
+
+The TUC documents the risks of workplace surveillance and argues for worker and
+union voice before monitoring is introduced; the ICO also treats monitoring of
+workers and communications with representatives as carrying significant data
+protection concerns. See
+https://www.tuc.org.uk/research-analysis/reports/ill-be-watching-you[TUC,
+_I'll be watching you_] and
+https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/employment/monitoring-workers/data-protection-and-monitoring-workers/[ICO,
+_Data protection and monitoring workers_].
+
+== Source families
+
+=== Worker and union authority
+
+The NUJ's published AI resources provide a primary union-policy baseline on
+human-centred journalism, consultation, copyright, jobs, skills, transparency,
+source integrity, and professional control. They do not establish that every
+member holds one view. Each motion, briefing, survey, or campaign item must
+retain its authorising body, date, scope, and methodology. See
+https://www.nuj.org.uk/resource/artificial-intelligence.html[NUJ,
+_Artificial intelligence: journalism before algorithms_] and
+https://www.nuj.org.uk/resource/dm2025-artificial-intelligence.html[NUJ Delegate
+Meeting 2025 AI decisions].
+
+TUC publications provide cross-sector evidence and proposals concerning worker
+voice, algorithmic management, data reciprocity, surveillance, equality, and
+collective bargaining. A policy report, consultation response, and survey are
+different evidence classes and must remain distinguishable. See
+https://www.tuc.org.uk/research-analysis/reports/dignity-work-and-ai-revolution[TUC,
+_Dignity at work and the AI revolution_] and
+https://www.tuc.org.uk/research-analysis/reports/ai-bill-project[TUC AI Bill
+Project].
+
+=== Official statistics and media research
+
+The ONS API is a candidate for denominators and contextual series concerning
+employment, occupation, industry, business conditions, and technology adoption.
+The official developer documentation describes an unrestricted beta HTTP API
+that supports dataset discovery and filtering. Beta status, revisions,
+classification boundaries, dimensions, weighting, and disclosure controls must
+travel with every result. See https://developer.ons.gov.uk/[ONS Developer Hub].
+
+Ofcom's News Consumption and Media Nations research can provide audience,
+platform, plurality, and market context. Audience consumption does not establish
+working conditions or the causal effect of AI. Every extracted figure must keep
+its wave, population, base, wording, method, and weighting. See
+https://www.ofcom.org.uk/research-and-data[Ofcom research and data].
+
+=== Regulation, rights, ownership, and accountability
+
+ICO guidance is a change-watch source for worker monitoring, automated
+decision-making, employment records, objections, and data rights. It is
+regulatory guidance, not individual legal advice, and its own page currently
+says parts are under review following legislative change.
+
+The Companies House API is a candidate for organisation identity, status,
+filings, and limited ownership context. The official API requires credentials.
+The first proposed connector must exclude officer/person-level enrichment and
+store credentials outside source control. Public filing data alone cannot prove
+editorial control, employment practice, or beneficial influence. See
+https://developer.company-information.service.gov.uk/[Companies House Developer
+Hub].
+
+Court and tribunal material is not automatically available for bulk intelligence
+work merely because judgments are public. Find Case Law says computational
+analysis requires separate licensing and prohibits external indexing without
+permission. The candidate is therefore blocked pending written permission,
+privacy and necessity assessment, and minimisation. See
+https://caselaw.nationalarchives.gov.uk/legal-framework[The National Archives,
+Find Case Law legal framework] and
+https://caselaw.nationalarchives.gov.uk/terms-of-use[Find Case Law terms].
+
+=== Published-media discovery
+
+Media Cloud and GDELT may help find and compare published coverage. Neither
+index is “the media,” and absence from either is not absence from reporting.
+Coverage, source selection, language handling, translation, clustering, query
+design, publisher rights, and changing APIs all affect results. Automated tone
+must not be re-labelled public, workforce, or union sentiment. See
+https://www.mediacloud.org/documentation[Media Cloud documentation] and
+https://blog.gdeltproject.org/gdelt-doc-2-0-api-debuts/[GDELT DOC 2.0 API].
+
+== Processing pipeline
+
+[cols="1,2,2,2"]
+|===
+|Stage |Input |Required receipt |Failure behaviour
+
+|Question and action horizon
+|A worker-, union-, journalism-, or public-interest question
+|Who needs what decision, by when; permitted purpose; prohibited-use review;
+what result could change the proposed action
+|Reject vague “monitor everything” briefs
+
+|Source discovery
+|Registry and transparent reconnaissance
+|Candidate URL/API, authority, expected coverage, access method, licence state,
+known blind spots
+|Keep as candidate; do not collect
+
+|Admission
+|Source-specific proposal
+|Governance, legality, licence, copyright, privacy, source protection, security,
+retention, deletion, and connector-gate decision
+|Reject or quarantine; purpose never overrides prohibited risk
+
+|Acquisition
+|Approved, scoped source
+|Retrieval time, source version, query, pagination horizon, response status,
+content digest, and raw-location reference
+|No silent partial result; record paging/rate-limit failure
+
+|Normalisation
+|Immutable acquired item
+|Original field, normalised field, transformation version, language, time zone,
+classification map, exclusions
+|Quarantine unparseable or schema-drifted records
+
+|Deduplication and entity resolution
+|Normalised candidates
+|Exact/near-duplicate links, organisation identifiers, ambiguity and human
+resolution
+|Keep ambiguous entities separate
+
+|Classification
+|Evidence with provenance
+|Evidence class, professional context, labour impact, source authority,
+inference boundary, and prohibited-use decision
+|Never collapse unlike evidence into one score
+
+|Corroboration and contradiction
+|Claims from one or more evidence classes
+|Independent support, dependency between sources, contradicting evidence,
+missing constituencies, and falsifiers
+|Label single-source, contested, or inconclusive
+
+|Field correction
+|Voluntary protected submission or authorised collective input
+|Consent scope, mandate, external evidence reference, withdrawal route,
+retaliation/source risk, and participant correction
+|Quarantine by default; raw evidence never goes in Git
+
+|Action brief
+|Reviewed claims and receipts
+|Findings, evidence references, state, limitations, dissent, possible actions,
+human decision owner, and review date
+|No automatic adverse or editorial decision
+
+|Outcome learning
+|Human decision and subsequent evidence
+|Action taken, authority, observed outcome, challenges, corrections, and whether
+the original inference held
+|Do not rewrite the historical receipt
+|===
+
+== Accuracy model
+
+Common Signal cannot guarantee a universally “accurate dataset.” Accuracy is
+claim-relative and bounded by instruments, sources, dates, definitions, and
+missing populations. The system can instead make every material claim
+auditable:
+
+* enumerate the source horizon and pagination denominator;
+* validate captured shapes, identifiers, dates, and units;
+* retain source version, query, retrieval time, digest, and transformation;
+* preserve corrections and source dependencies;
+* distinguish absence from “not observed by this instrument”;
+* require an explicit inference boundary and plausible falsifier;
+* use `emerging`, `corroborated`, `contested`, or `inconclusive`, never an opaque
+  universal confidence score;
+* make human review, dissent, expiry, and re-review visible.
+
+== Field input architecture
+
+The future intake path should be a protected submission service, not a public
+GitHub issue or ordinary analytics form. It requires:
+
+* HTTPS and authenticated or represented routes appropriate to the risk;
+* separation of identity/contact material from analytical content;
+* pseudonymous references and encrypted, access-controlled storage;
+* a route mediated by a recognised representative where requested;
+* no collection of membership lists or organising strategy;
+* explicit purpose, consent scope, retention, deletion, correction, withdrawal,
+  and breach response;
+* safe handling of legal privilege, source confidentiality, whistleblowing,
+  safeguarding, and retaliation risk;
+* optional offline or in-person routes for people who cannot safely use an
+  employer-controlled device;
+* publication only of minimised, reviewed claims with participant correction and
+  an inference boundary.
+
+`schemas/v1/field-observation.schema.json` describes public decision metadata,
+not the raw testimony store.
+
+== First connector order
+
+. Manual, versioned NUJ/TUC/ICO policy baseline.
+. Read-only ONS dataset catalogue and metadata reconnaissance—no bulk
+  observations until a named question selects dimensions and denominators.
+. Ofcom table inventory and methodology capture.
+. Organisation-only Companies House prototype using a separately managed test
+  credential and no person-level enrichment.
+. Media Cloud/GDELT discovery experiment using a synthetic query corpus and
+  measured coverage gaps, without retaining article bodies.
+. Field submissions only after the governance, security, safeguarding,
+  retention, deletion, and representation process is ratified and tested.
+
+Court/tribunal computational analysis remains outside this order until its
+licensing and privacy blockers are resolved.

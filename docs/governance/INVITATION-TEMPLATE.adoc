@@ -1,0 +1,74 @@
+// SPDX-License-Identifier: CC-BY-SA-4.0
+// SPDX-FileCopyrightText: 2026 Jonathan D.A. Jewell
+= Invitation to review Common Signal worker governance
+
+[IMPORTANT]
+====
+This is a template. Sending it, receiving a reply, or attending a session does
+not constitute support, consent, endorsement, a collective agreement, or union
+ratification.
+====
+
+== What Common Signal is
+
+Common Signal is an experimental, worker-centred public-interest project about
+the effects of AI on journalism, public relations, communications, and related
+media work. It currently uses synthetic examples only. It is not an NUJ service
+and is not endorsed by the NUJ or another union.
+
+== What we are asking
+
+We invite you to examine and change the project's draft governance rules,
+including prohibited uses, consultation records, evidence limits, challenge and
+remedy, and the conditions that would apply before any live data source could
+even be proposed. The outcome is open: participants may require changes, impose
+conditions, decline support, or recommend that work stop.
+
+This invitation seeks: _[personal experience / workplace review / recognised
+union review / another stated mandate]_. Please do not imply a collective or
+union mandate unless the relevant body has actually provided one.
+
+== Materials
+
+* `docs/WORKER-GOVERNANCE.adoc`
+* `docs/governance/CO-DESIGN-PROTOCOL.adoc`
+* `policies/prohibited-uses.json`
+* relevant versioned schemas under `schemas/v1/`
+* a plain-language description of the prototype and proposed decision scope
+
+State the exact version or revision of every supplied document here: _[versions]_.
+
+== Participation and safety
+
+The expected time is _[duration]_. Participation can be _[in person / remote /
+written / through a representative]_. Recording is off by default. You may skip
+a question, ask for a separate session, correct the proposed record, withdraw
+attribution, or stop participating.
+
+Do not send union membership information, confidential casework, protected
+source material, unpublished industrial strategy, special-category data, or
+identifiable workplace evidence. State the confidential route—held outside the
+public repository—if one is legitimately available: _[route or “none”]_.
+
+Accessibility, language, communication, care, and represented-participation
+arrangements available: _[offer and contact route]_.
+
+Payment, honorarium, release-time or replacement-income position: _[state the
+actual position, including if no funding is available]_.
+
+== How comments affect the project
+
+Required changes, reservations and dissent will be mapped to a published
+response without attribution unless permission is explicit. Participants will
+receive their proposed record by _[date]_ and may correct it through _[route]_.
+Project maintainers cannot turn individual comments into a claim of collective
+approval. Any later collective decision must follow the authorised body's own
+process and record its precise scope, conditions, review date and withdrawal
+route.
+
+== Independence and interests
+
+Project funders, employers, vendors, commissioning bodies, facilitator interests,
+and constraints relevant to this review: _[full declaration]_.
+
+Contact, correction, accessibility and withdrawal route: _[route]_.

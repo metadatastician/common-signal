@@ -1,0 +1,6 @@
+# SPDX-License-Identifier: MPL-2.0
+
+[tools]
+rust = "1.97.1"
+zig = "0.16.0"
+just = "1.56"

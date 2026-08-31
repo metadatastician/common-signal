@@ -1,0 +1,12 @@
+// SPDX-License-Identifier: CC-BY-SA-4.0
+// SPDX-FileCopyrightText: 2026 Jonathan D.A. Jewell
+= Design prototypes
+
+`preview.html` is the self-contained design artifact supplied on 2026-08-30.
+It is preserved as an input to product and architecture work, not presented as
+a deployed Common Signal service.
+
+The source artifact was copied without functional changes. A documentation
+licence marker was added to make its treatment in this repository explicit.
+See `../PRODUCT-REVIEW.adoc` for the bounded review.
+

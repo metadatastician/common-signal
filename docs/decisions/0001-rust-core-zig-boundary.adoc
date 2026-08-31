@@ -1,0 +1,51 @@
+// SPDX-License-Identifier: CC-BY-SA-4.0
+// SPDX-FileCopyrightText: 2026 Jonathan D.A. Jewell
+= ADR 0001: Rust core with a Zig protocol and FFI boundary
+:status: superseded by ADR 0004
+:date: 2026-08-30
+
+== Context
+
+Common Signal needs a canonical evidence model, deterministic query semantics,
+careful resource use, and several API projections. The initial language choices
+were Rust, Elixir, or Julia. The project must also use Zig at its FFI and API
+adapter boundary. If BEAM-native work is later required, the estate preference
+is supervised SNIFs rather than NIFs.
+
+== Decision
+
+Use Rust for the canonical domain model, invariants, transforms, and query
+algebra. Expose a small versioned C ABI and consume it from Zig. Maintain a
+sixteen-slot Zig protocol registry, but report a slot as implemented only when
+its schema, projection, error semantics, and tests exist.
+
+The first slice implements contract projections for REST, GraphQL, and gRPC
+because those are named and sketched in the supplied prototype. Only REST has
+an operational transport: Zig owns a deliberately loopback-only HTTP/1.1 wire
+boundary and delegates canonical request semantics to Rust through the C ABI.
+GraphQL and gRPC remain projections, not network services; in particular, the
+project does not describe JSON over HTTP/1.1 as gRPC. The other thirteen slots
+return `UnsupportedProtocol`.
+
+== Why not Elixir as the core
+
+Elixir is a strong future choice for connector supervision, ingestion,
+back-pressure, scheduling, and durable workflows. It is not the best first home
+for the protocol-neutral evidence model because it would split low-level schema
+and ABI work across the BEAM and native code immediately. If adopted later,
+native calls will use supervised SNIFs so native faults are isolated from the
+BEAM.
+
+== Why not Julia as the core
+
+Julia is well suited to exploratory analysis and research notebooks. Common
+Signal's first need is a long-running, auditable service and stable interchange
+boundary rather than numerical exploration. Julia may later be a downstream
+analysis client operating on exported, provenance-carrying datasets.
+
+== Consequences
+
+Rust owns semantic truth and Zig owns transport and wire I/O. Protocol adapters
+must not invent meanings absent from the canonical algebra. A future Elixir or
+Julia component is a client or orchestrator unless a later ADR changes this
+boundary.
