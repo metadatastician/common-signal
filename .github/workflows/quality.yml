@@ -33,6 +33,10 @@ jobs:
       - name: Check for large files
         run: |
           find . -type f -size +1M -not -path "./.git/*" | head -10 || echo "No large files"
+      - name: Script regression tests (repo-init passes)
+        run: |
+          bash tests/workflows/strip_instruction_blocks_test.sh
+          bash tests/workflows/prune_dependabot_ecosystems_test.sh
       - name: EditorConfig check
         uses: editorconfig-checker/action-editorconfig-checker@v3.0.0
         continue-on-error: true

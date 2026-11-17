@@ -19,3 +19,7 @@ https://semver.org/spec/v2.0.0.html[Semantic Versioning].
   `docs/`, and repair the cross-platform `cloak`/`uncloak` recipe syntax.
 * Restore the tracked-file language-ban gate with regression fixtures proving
   that supported Zig passes while prohibited V-language remnants fail.
+* Port `scripts/strip-instruction-blocks` and
+  `scripts/prune-dependabot-ecosystems` from Python (banned estate-wide;
+  Hypatia `cicd_rules/banned_language_file`, critical) to Bash, keeping their
+  behaviour, and run their regression tests in the Code Quality workflow.
