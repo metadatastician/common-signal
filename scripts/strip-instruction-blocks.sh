@@ -7,7 +7,8 @@
 # Bash port of the former scripts/strip-instruction-blocks.py (removed: Python
 # is banned estate-wide, standards 3-practice/LANGUAGE-POLICY.adoc §3, and
 # Hypatia's cicd_rules/banned_language_file flagged it critical). Behaviour is
-# kept byte-for-byte on UTF-8 LF text; tests/workflows/strip_instruction_blocks_test.sh
+# kept byte-for-byte on UTF-8 LF text, and CRLF is preserved rather than
+# normalized; tests/workflows/strip_instruction_blocks_test.sh
 # pins it.
 #
 # Why this exists: the community-health templates open with an HTML comment
@@ -33,7 +34,8 @@
 # filled in, so only the instructions go.
 #
 # Usage: strip-instruction-blocks.sh [root]      (default ".")
-# Exit 0 always; prints one line per file changed. Idempotent.
+# Exit 0 unless a rewrite fails (then 1, as the original raised); prints one
+# line per file changed. Idempotent.
 
 set -uo pipefail
 export LC_ALL=C   # byte semantics: the marker and delimiters are ASCII
@@ -71,7 +73,12 @@ strip_text() {
             rest=${body:${#inner}+${#CLOSE}}
             ws=${rest%%[!$' \t']*}
             rest=${rest:${#ws}}
-            [[ $rest == $'\n'* ]] && rest=${rest:1}
+            # One line break, LF or CRLF (CRLF bytes elsewhere are preserved).
+            if [[ $rest == $'\r\n'* ]]; then
+                rest=${rest:2}
+            elif [[ $rest == $'\n'* ]]; then
+                rest=${rest:1}
+            fi
         else
             # Not a block. Any opener nested before this comment's terminator
             # shares that terminator and a subset of the body, so it cannot
@@ -83,7 +90,22 @@ strip_text() {
     STRIPPED=$out$rest
 }
 
-# strip_file: rewrite $1 in place; return 0 iff it changed.
+# collapse_breaks: write $1 to the global COLLAPSED with every run of three or
+# more line breaks (each LF or CRLF) cut to its first two. On LF-only text this
+# is exactly the original's re.sub(r"\n{3,}", "\n\n", ...).
+collapse_breaks() {
+    local s=$1 out='' run
+    local run_re=$'(\r?\n)(\r?\n)(\r?\n)+'
+    while [[ $s =~ $run_re ]]; do
+        run=${BASH_REMATCH[0]}
+        out+=${s%%"$run"*}${BASH_REMATCH[1]}${BASH_REMATCH[2]}
+        s=${s#*"$run"}
+    done
+    COLLAPSED=$out$s
+}
+
+# strip_file: rewrite $1 in place. Returns 0 if it changed, 1 if there was
+# nothing to change, 2 if the rewrite failed (the original raised there).
 strip_file() {
     local path=$1 text new
     grep -qF -- "$MARKER" "$path" 2>/dev/null || return 1
@@ -100,21 +122,22 @@ strip_file() {
     new=$STRIPPED
     [[ $new == "$text" ]] && return 1
     # Collapse the gap the deletion leaves (file-wide, as before).
-    while [[ $new == *$'\n\n\n'* ]]; do
-        new=${new//$'\n\n\n'/$'\n\n'}
-    done
-    printf '%s' "$new" > "$path"
+    collapse_breaks "$new"
+    printf '%s' "$COLLAPSED" > "$path" || return 2
 }
 
 main() {
     local root=${1:-.} changed=0 f shown
     while IFS= read -r -d '' f; do
-        if strip_file "$f"; then
-            shown=$f
-            [ "$root" = "." ] && shown=${f#./}
-            echo "  instruction block: stripped from $shown"
-            changed=$((changed + 1))
-        fi
+        shown=$f
+        [ "$root" = "." ] && shown=${f#./}
+        strip_file "$f"
+        case $? in
+            0)  echo "  instruction block: stripped from $shown"
+                changed=$((changed + 1)) ;;
+            2)  echo "  instruction block: FAILED to rewrite $shown" >&2
+                return 1 ;;
+        esac
     done < <(find "$root" \
                  \( -type d \( -name .git -o -name node_modules -o -name .venv \
                                -o -name target -o -name dist \) -prune \) \

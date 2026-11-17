@@ -95,4 +95,25 @@ out3=$(bash "$SCRIPT" "$W/repo")
 grep -qF "stripped from $W/repo/docs/again.md" <<<"$out3" || fail "case 6: report path for explicit root"
 [ ! -s "$W/repo/docs/again.md" ] || fail "case 6: block-only file should be empty"
 
-echo "PASS: strip-instruction-blocks.sh (6 cases)"
+
+# ── 7. CRLF: the block's own CRLF goes with it, CRLF runs collapse like LF
+#       runs, and surviving CRLF bytes are preserved (not normalized). ─────
+printf 'A\r\n\r\n<!-- %s -->\r\n\r\nB\r\n' "$M" > "$W/repo/docs/crlf.md"
+bash "$SCRIPT" "$W/repo" >/dev/null
+[ "$(cat "$W/repo/docs/crlf.md"; printf x)" = "$(printf 'A\r\n\r\nB\r\nx')" ] \
+    || { od -c "$W/repo/docs/crlf.md" >&2; fail "case 7: CRLF handling"; }
+
+# ── 8. A failed rewrite is an error, not a silent "nothing changed". Root
+#       ignores file modes, so this runs only unprivileged (as in CI). ────
+if [ "$(id -u)" -ne 0 ]; then
+    printf '<!-- %s -->\nkeep\n' "$M" > "$W/repo/docs/ro.md"
+    chmod 444 "$W/repo/docs/ro.md"
+    if bash "$SCRIPT" "$W/repo" >/dev/null 2>"$W/ro.err"; then
+        fail "case 8: write failure exited 0"
+    fi
+    grep -q 'FAILED to rewrite' "$W/ro.err" || fail "case 8: write failure not reported"
+    chmod 644 "$W/repo/docs/ro.md"
+    echo "PASS: strip-instruction-blocks.sh (8 cases)"
+else
+    echo "PASS: strip-instruction-blocks.sh (7 cases; case 8 skipped as root)"
+fi

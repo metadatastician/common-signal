@@ -115,7 +115,10 @@ main() {
         return 0
     fi
 
-    printf '%s' "$head$kept_text" > "$path"
+    printf '%s' "$head$kept_text" > "$path" || {
+        echo "  dependabot: failed to write $path" >&2
+        return 1
+    }
     local IFS=,
     local k_list="${kept[*]}" d_list="${dropped[*]}"
     echo "  dependabot: kept ${k_list//,/, } / dropped ${d_list//,/, }"

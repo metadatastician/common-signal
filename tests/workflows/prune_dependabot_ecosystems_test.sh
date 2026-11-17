@@ -82,4 +82,17 @@ bash "$SCRIPT" "$W/e.yml" cargo >/dev/null
 [ "$(cat "$W/e.yml"; printf x)" = "$(printf 'updates:\n  - package-ecosystem: "cargo"\n    directory: "/"x')" ] \
     || fail "case 5: trailing-newline handling"
 
-echo "PASS: prune-dependabot-ecosystems.sh (5 cases)"
+# ── 6. A failed write exits non-zero and does not report success. Root
+#       ignores file modes, so this runs only unprivileged (as in CI). ────
+if [ "$(id -u)" -ne 0 ]; then
+    cp "$W/fixture.yml" "$W/ro.yml"
+    chmod 444 "$W/ro.yml"
+    if out=$(bash "$SCRIPT" "$W/ro.yml" cargo 2>"$W/ro.err"); then
+        fail "case 6: write failure exited 0"
+    fi
+    case $out in *kept*) fail "case 6: reported success on a failed write" ;; esac
+    grep -q 'failed to write' "$W/ro.err" || fail "case 6: write failure not reported"
+    echo "PASS: prune-dependabot-ecosystems.sh (6 cases)"
+else
+    echo "PASS: prune-dependabot-ecosystems.sh (5 cases; case 6 skipped as root)"
+fi
